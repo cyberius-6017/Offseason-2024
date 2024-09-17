@@ -13,7 +13,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
-// import edu.wpi.first.math.kinematics.SwerveDriveWheelPositions;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -25,7 +24,7 @@ import frc.robot.LimelightHelpers;
 
 public class drivetrain extends SubsystemBase{
 
-    private Pigeon2 gyro = new Pigeon2(0);
+    private Pigeon2 gyro = new Pigeon2(1);
 
 
     private swerveModule[] swerveModules;
@@ -75,11 +74,6 @@ public class drivetrain extends SubsystemBase{
                 swerveModules[2].getPosition(),
                 swerveModules[3].getPosition()
             };
-            
-        // swerveWheels =
-        //     new SwerveDriveWheelPositions[]{
-        //         new SwerveDriveWheelPositions(swervePositions)
-        //     };
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveOdoKinematics, 
                                                  getOdoYaw(), 
@@ -89,17 +83,16 @@ public class drivetrain extends SubsystemBase{
                                                            swervePositions, 
                                                            getPose());
         field.setRobotPose(getPose());
-        // limef = NetworkTableInstance.getDefault().getTable(Constants.Sensors.limef);
-        // limeb = NetworkTableInstance.getDefault().getTable(Constants.Sensors.limeb);  
+
     }
 
     public void drive(Translation2d translation, double rotation, boolean isFieldDrive, boolean isOpenloop){
 
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveOdoKinematics.toSwerveModuleStates(isFieldDrive ? ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), 
-                                                                                                                        translation.getY(),
-                                                                                                                        rotation, 
-                                                                                                                        getOdoYaw())
+                                                                                                                           translation.getY(),
+                                                                                                                           rotation, 
+                                                                                                                           getOdoYaw())
                                                                                     : new ChassisSpeeds(-translation.getY(),
                                                                                                          translation.getX(),
                                                                                                          rotation));

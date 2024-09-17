@@ -56,7 +56,7 @@ public class swerveModule extends SubsystemBase {
         steerMotor.getConfigurator().apply(new TalonFXConfiguration());
         steerMotor.getConfigurator().apply(new CurrentLimitsConfigs().withStatorCurrentLimit(Constants.Swerve.angleContinuousCurrentLimit));
         steerMotor.setControl(new StaticBrake());
-        steerMotor.setInverted(false);
+        steerMotor.setInverted(Constants.Swerve.angleInvert);
 
         var slot0Configs1 = new Slot0Configs();
         slot0Configs1.kP = Constants.Swerve.angleKP;
@@ -71,7 +71,7 @@ public class swerveModule extends SubsystemBase {
         driveMotor.getConfigurator().apply(new TalonFXConfiguration());
         driveMotor.getConfigurator().apply(new CurrentLimitsConfigs().withStatorCurrentLimit(Constants.Swerve.driveContinuousCurrentLimit));
         driveMotor.setControl(new StaticBrake());
-        driveMotor.setInverted(false);
+        driveMotor.setInverted(Constants.Swerve.driveInvert);
 
         var slot0Configs2 = new Slot0Configs();
         slot0Configs2.kP = Constants.Swerve.driveKP;
@@ -85,6 +85,7 @@ public class swerveModule extends SubsystemBase {
     }
 
     public void resetToAbsolute(){
+        steerMotor.setPosition(0.0);
 
         double absolutePosition = getCANCoderAngle().getDegrees() - angleOffset.getDegrees();
         steerMotor.setPosition(absolutePosition);
@@ -156,7 +157,7 @@ public class swerveModule extends SubsystemBase {
 
     public SwerveModuleState getStateEncoder() {
 
-        return new SwerveModuleState(driveMotor.getVelocity().getValue(), getCANCoderAngle());
+        return new SwerveModuleState(getDriveVelocity(), getCANCoderAngle());
 
     }
 
