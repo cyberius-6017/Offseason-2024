@@ -107,7 +107,7 @@ public final class Constants {
     public static final double alignFF = 0.0;
 
     /* Steer Motor PID Values */
-    public static final double angleKP = 7.0;
+    public static final double angleKP = 12.0;
     public static final double angleKI = 0.0;
     public static final double angleKD = 0.0005;
     public static final double angleKFF = 0.0;
