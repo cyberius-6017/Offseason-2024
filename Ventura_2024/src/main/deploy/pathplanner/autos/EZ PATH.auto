@@ -1,0 +1,61 @@
+{
+  "version": 1.0,
+  "startingPose": null,
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "EZ 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "EZ 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "EZ 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "EZ 4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "EZ 5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "EZ 6"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "EZ 7"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "EZ 8"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
