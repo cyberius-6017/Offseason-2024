@@ -184,7 +184,7 @@ public class drivetrain extends SubsystemBase{
 
     public void driveRobotRelative(ChassisSpeeds speeds){
         //TODO: Check open loop
-        this.drive(new Translation2d(speeds.vyMetersPerSecond, -speeds.vxMetersPerSecond ),speeds.omegaRadiansPerSecond,false,true);
+        this.drive(new Translation2d(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond ),speeds.omegaRadiansPerSecond,false,true);
     
     }
 

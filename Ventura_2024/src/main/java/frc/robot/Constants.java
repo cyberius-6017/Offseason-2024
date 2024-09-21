@@ -58,16 +58,16 @@ public final class Constants {
     public static final double driveGearRatio = (153.0 / 25.0); // 
     public static final double angleGearRatio = (150.0 / 7.0); // 21.42:1
 
-    public static final double drivePPkP = 2.5;
+    public static final double drivePPkP = 3.5;
     public static final double drivePPkI = 0.0;
     public static final double drivePPkD = 0.001;
     
-    public static final double steerPPkP = 2.5;
+    public static final double steerPPkP = 0.2;
     public static final double steerPPkI = 0.0;
-    public static final double steerPPkD = 0.001;
+    public static final double steerPPkD = 0.0;
 
     /* Swerve Profiling Values */
-    public static final double maxSpeed = 5.5; // meters per second
+    public static final double maxSpeed = 6.5; // meters per second
     public static final double maxAngularVelocity = 12.5;
 
     public static final HolonomicPathFollowerConfig holoConfig =
@@ -107,7 +107,7 @@ public final class Constants {
     public static final double alignFF = 0.0;
 
     /* Steer Motor PID Values */
-    public static final double angleKP = 12.0;
+    public static final double angleKP = 10.0;
     public static final double angleKI = 0.0;
     public static final double angleKD = 0.0005;
     public static final double angleKFF = 0.0;
