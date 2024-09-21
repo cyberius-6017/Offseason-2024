@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain.drivetrain;
 
-public class drivetrainCommand extends Command{
+public class drivetrainCommandDefault extends Command{
 
     private drivetrain driveTrain;
     private Supplier<Double> translation, strafe, rotation;
@@ -24,9 +24,9 @@ public class drivetrainCommand extends Command{
 
     
 
-    public drivetrainCommand(drivetrain m_DriveTrain, Supplier<Double> translation, Supplier<Double> strafe, Supplier<Double> rotation, Supplier<Boolean> changeDrive, Supplier<Boolean> resetPigeon){
+    public drivetrainCommandDefault(drivetrain drivetrain, Supplier<Double> translation, Supplier<Double> strafe, Supplier<Double> rotation, Supplier<Boolean> changeDrive, Supplier<Boolean> resetPigeon){
 
-        this.driveTrain = m_DriveTrain;
+        this.driveTrain = drivetrain;
         this.translation = translation;
         this.strafe = strafe;
         this.rotation = rotation;
@@ -34,7 +34,7 @@ public class drivetrainCommand extends Command{
         this.resetPigeon = resetPigeon;
         isRobotCentric = true;
 
-        addRequirements(m_DriveTrain);
+        addRequirements(drivetrain);
 
     }
     
@@ -42,6 +42,8 @@ public class drivetrainCommand extends Command{
     public void execute() {
 
         if(changeDrive.get()){
+
+            System.out.println("Drive Mode changed");
             
             isRobotCentric = !isRobotCentric;
 

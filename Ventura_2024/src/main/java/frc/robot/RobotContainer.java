@@ -7,8 +7,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.drivetrainCommand;
-import frc.robot.commands.drivetrainTankCommand;
+import frc.robot.commands.drivetrainCommandDefault;
+import frc.robot.commands.drivetrainCommandTank;
+// import frc.robot.commands.drivetrainCommand;
+// import frc.robot.commands.drivetrainTankCommand;
 import frc.robot.subsystems.drivetrain.drivetrain;
 
 public class RobotContainer {
@@ -30,9 +32,9 @@ public class RobotContainer {
     
     registerCommands();
 
-    m_Drivetrain.setDefaultCommand(new drivetrainCommand(m_Drivetrain, 
-                                   ()-> -driverController.getLeftX(), 
-                                   ()-> driverController.getLeftY(),
+    m_Drivetrain.setDefaultCommand(new drivetrainCommandDefault(m_Drivetrain, 
+                                   ()-> -driverController.getLeftY(), 
+                                   ()-> -driverController.getLeftX(),
                                    ()-> -driverController.getRightX(),
                                    ()-> driverController.getBButtonPressed(),
                                    ()-> driverController.getYButtonPressed()));
@@ -47,9 +49,11 @@ public class RobotContainer {
 
   private void configureBindings() {
 
-    tankTrigger.onTrue(new drivetrainTankCommand(m_Drivetrain, (()-> (Math.abs(driverController.getRightTriggerAxis()) > 0.2 || Math.abs(driverController.getLeftTriggerAxis()) > 0.2)), 
-                                                                ()-> driverController.getRightTriggerAxis(), 
-                                                                ()-> driverController.getLeftTriggerAxis()));
+    tankTrigger.onTrue(new drivetrainCommandTank(m_Drivetrain, 
+                                                 ()-> driverController.getRightTriggerAxis(), 
+                                                 ()-> driverController.getLeftTriggerAxis(),
+                                                 ()-> (Math.abs(driverController.getRightTriggerAxis()) > 0.2 
+                                                    || Math.abs(driverController.getLeftTriggerAxis()) > 0.2)));
     
   }
 

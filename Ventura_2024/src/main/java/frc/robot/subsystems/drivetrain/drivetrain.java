@@ -24,7 +24,8 @@ import frc.robot.LimelightHelpers;
 
 public class drivetrain extends SubsystemBase{
 
-    private Pigeon2 gyro = new Pigeon2(1);
+
+    private Pigeon2 gyro;
 
 
     private swerveModule[] swerveModules;
@@ -36,9 +37,9 @@ public class drivetrain extends SubsystemBase{
     
 
     public drivetrain(){
+        gyro = new Pigeon2(1);
         gyro.getConfigurator().apply(new Pigeon2Configuration());
-        gyro.reset();
-        zeroPigeon();
+        gyro.setYaw(0);
         
 
         field = new Field2d();
@@ -93,8 +94,8 @@ public class drivetrain extends SubsystemBase{
                                                                                                                            translation.getY(),
                                                                                                                            rotation, 
                                                                                                                            getOdoYaw())
-                                                                                    : new ChassisSpeeds(-translation.getY(),
-                                                                                                         translation.getX(),
+                                                                                    : new ChassisSpeeds(translation.getX(),
+                                                                                                         translation.getY(),
                                                                                                          rotation));
 
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
@@ -139,7 +140,7 @@ public class drivetrain extends SubsystemBase{
 
     public void zeroPigeon() {
 
-        System.out.println("Pigean zeroed correctly");
+        System.out.println("Pigeon zeroed correctly");
         gyro.setYaw(0.0);
 
     }
@@ -212,120 +213,8 @@ public class drivetrain extends SubsystemBase{
 
         boolean rejectUpdate = false;
 
-        if(LimelightHelpers.getTV(Constants.Sensors.limef) && LimelightHelpers.getTV(Constants.Sensors.limeb)){
+        if(LimelightHelpers.getTV(Constants.Sensors.limef)){
 
-            if(LimelightHelpers.getTA(Constants.Sensors.limeb) > LimelightHelpers.getTA(Constants.Sensors.limef)){
-
-                LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.Sensors.limeb);
-        
-                if(mt1.tagCount == 1 && mt1.rawFiducials.length == 1){
-
-                    if(mt1.rawFiducials[0].ambiguity > .7){
-
-                        rejectUpdate = true;
-    
-                    }
-    
-                    if(mt1.rawFiducials[0].distToCamera > 3) {
-    
-                        rejectUpdate = true;
-    
-                    }
-    
-                }
-    
-                if(mt1.tagCount == 0){
-    
-                    rejectUpdate = true;
-    
-                }
-
-    
-                if(!rejectUpdate){
-    
-                    swervePoseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.02,.02,0.005));
-                    swervePoseEstimator.addVisionMeasurement(mt1.pose,
-                                                            mt1.timestampSeconds);
-                }
-                    
-            }
-
-            else {
-
-                LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.Sensors.limef);
-      
-                if(mt1.tagCount == 1 && mt1.rawFiducials.length == 1){
-
-                    if(mt1.rawFiducials[0].ambiguity > .7){
-
-                        rejectUpdate = true;
-  
-                   }
-  
-                    if(mt1.rawFiducials[0].distToCamera > 3) {
-                        
-                        rejectUpdate = true;
-  
-                   }
-  
-                }
-  
-                if(mt1.tagCount == 0){
-  
-                    rejectUpdate = true;
-  
-                }
-
-  
-                if(!rejectUpdate){
-  
-                    swervePoseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.02,.02,0.005));
-                    swervePoseEstimator.addVisionMeasurement(mt1.pose,
-                                                         mt1.timestampSeconds);
-                }
-
-            }
-
-        }
-
-        else if(LimelightHelpers.getTV(Constants.Sensors.limeb)){
-
-            LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.Sensors.limeb);
-      
-            if(mt1.tagCount == 1 && mt1.rawFiducials.length == 1){
-
-                if(mt1.rawFiducials[0].ambiguity > .7){
-
-                    rejectUpdate = true;
-  
-                }
-  
-                if(mt1.rawFiducials[0].distToCamera > 3) {
-  
-                    rejectUpdate = true;
-  
-                }
-  
-            }
-  
-            if(mt1.tagCount == 0){
-  
-                rejectUpdate = true;
-  
-            }
-
-  
-            if(!rejectUpdate){
-  
-                swervePoseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.02,.02,0.005));
-                swervePoseEstimator.addVisionMeasurement(mt1.pose,
-                                                         mt1.timestampSeconds);
-            }
-
-        }
-
-        else if(LimelightHelpers.getTV(Constants.Sensors.limef)){
-        
             LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.Sensors.limef);
       
             if(mt1.tagCount == 1 && mt1.rawFiducials.length == 1){
@@ -365,35 +254,20 @@ public class drivetrain extends SubsystemBase{
 
     @Override
     public void periodic() {
-        //swerveOdometry.update(getOdoYaw(), getPositions());
-        //swervePoseEstimator.update(getOdoYaw(), getPositions());
-        // //swervePoseEstimator.addVisionMeasurement(getPose(), 0);
-        // limef = NetworkTableInstance.getDefault().getTable(Constants.Sensors.limef);
-        // limeb = NetworkTableInstance.getDefault().getTable(Constants.Sensors.limeb);        
-        
-        
+             
         SmartDashboard.putString("Odometry: ", swerveOdometry.getPoseMeters().getTranslation().toString());
-        SmartDashboard.putNumber("NavX", getYaw().getDegrees());
-        SmartDashboard.putNumber("NavX Odo", getOdoYaw().getDegrees());
-
-        // if(limeb.getEntry("tv").getDouble(0) == 1){
-
-        //     poseData = limeb.getEntry("botpos_wpiblue").getDoubleArray(poseData);
-        //     visionMeasurement = new Pose2d(poseData[0], poseData[1], getOdoYaw());
-        //     swervePoseEstimator.addVisionMeasurement(visionMeasurement, Timer.getFPGATimestamp());     
-
-        // }
-
+        SmartDashboard.putNumber("Pigeon", getYaw().getDegrees());
+        SmartDashboard.putNumber("Pigeon Odo", getOdoYaw().getDegrees());
 
         updateOdometry();
         field.setRobotPose(swervePoseEstimator.getEstimatedPosition());
 
 
         double loggingModulesStates [] = {
-            swerveModules[0].getState().angle.getDegrees(), swerveModules[0].getState().speedMetersPerSecond * 50,
-            swerveModules[1].getState().angle.getDegrees(), swerveModules[1].getState().speedMetersPerSecond * 50,
-            swerveModules[2].getState().angle.getDegrees(), swerveModules[2].getState().speedMetersPerSecond * 50,
-            swerveModules[3].getState().angle.getDegrees(), swerveModules[3].getState().speedMetersPerSecond * 50   
+            swerveModules[0].getState().angle.getDegrees(), swerveModules[0].getState().speedMetersPerSecond,
+            swerveModules[1].getState().angle.getDegrees(), swerveModules[1].getState().speedMetersPerSecond,
+            swerveModules[2].getState().angle.getDegrees(), swerveModules[2].getState().speedMetersPerSecond,
+            swerveModules[3].getState().angle.getDegrees(), swerveModules[3].getState().speedMetersPerSecond   
         };
 
         SmartDashboard.putNumber("Angle FL: ", swerveModules[0].getState().angle.getDegrees());
