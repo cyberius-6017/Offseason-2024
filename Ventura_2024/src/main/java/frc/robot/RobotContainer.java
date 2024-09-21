@@ -35,6 +35,7 @@ public class RobotContainer {
     autoChooser = AutoBuilder.buildAutoChooser("EZ AUTO");
     autoChooser.addOption("EZ AUTO", new PathPlannerAuto("EZ AUTO"));
     autoChooser.addOption("Test", new PathPlannerAuto("Test"));
+    autoChooser.addOption("EZ PATH", new PathPlannerAuto("EZ PATH"));
 
     m_Drivetrain.setDefaultCommand(new drivetrainCommandDefault(m_Drivetrain, 
                                    ()-> -driverController.getLeftY(), 
