@@ -18,9 +18,9 @@ public class drivetrainCommandDefault extends Command{
     private boolean isRobotCentric = false;
 
     
-    private SlewRateLimiter translationLimit = new SlewRateLimiter(3.0);
-    private SlewRateLimiter strafeLimit = new SlewRateLimiter(3.0);
-    private SlewRateLimiter rotationLimit = new SlewRateLimiter(3.0);
+    private SlewRateLimiter translationLimit = new SlewRateLimiter(2.0);
+    private SlewRateLimiter strafeLimit = new SlewRateLimiter(2.0);
+    private SlewRateLimiter rotationLimit = new SlewRateLimiter(2.0);
 
     
 

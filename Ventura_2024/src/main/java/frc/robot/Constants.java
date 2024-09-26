@@ -27,7 +27,7 @@ public final class Constants {
 
   public static final class Sensors {
 
-    public static final String limef = "limelight-front";
+    public static final String limef = "limelight-back";
     //public static final String limeb = "limelight-back";
 
   }
@@ -55,16 +55,16 @@ public final class Constants {
     
 
   
-    public static final double driveGearRatio = (153.0 / 25.0); // 
+    public static final double driveGearRatio = (153.0 / 25.0); //6.12:1 
     public static final double angleGearRatio = (150.0 / 7.0); // 21.42:1
 
-    public static final double drivePPkP = 3.5;
+    public static final double drivePPkP = 2.5;
     public static final double drivePPkI = 0.0;
     public static final double drivePPkD = 0.001;
     
-    public static final double steerPPkP = 0.2;
+    public static final double steerPPkP = 2.5;
     public static final double steerPPkI = 0.0;
-    public static final double steerPPkD = 0.0;
+    public static final double steerPPkD = 0.0001;
 
     /* Swerve Profiling Values */
     public static final double maxSpeed = 6.5; // meters per second
@@ -73,17 +73,9 @@ public final class Constants {
     public static final HolonomicPathFollowerConfig holoConfig =
         new HolonomicPathFollowerConfig(new PIDConstants(drivePPkP, drivePPkI, drivePPkD), 
                                         new PIDConstants(steerPPkP, steerPPkI, steerPPkD), 
-                                        maxSpeed, // Max module speed, in m/s
-                                        baseRadius, // Drive base radius in meters. Distance from robot center to furthest module.
+                                        maxSpeed, 
+                                        baseRadius, 
                                         new ReplanningConfig());
-
-
-    // public static final SwerveDriveKinematics swerveKinematics =
-    //     new SwerveDriveKinematics(
-    //         new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
-    //         new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
-    //         new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0),
-    //         new Translation2d(-wheelBase / 2.0, trackWidth / 2.0));
     
     public static final SwerveDriveKinematics swerveOdoKinematics =
         new SwerveDriveKinematics(
@@ -96,7 +88,7 @@ public final class Constants {
     public static final double voltageComp = 12.0;
 
     /* Swerve Current Limiting */
-    public static final int angleContinuousCurrentLimit = 40;
+    public static final int angleContinuousCurrentLimit = 30;
     public static final int driveContinuousCurrentLimit = 80;
 
     /* Navigate */ 
@@ -107,9 +99,9 @@ public final class Constants {
     public static final double alignFF = 0.0;
 
     /* Steer Motor PID Values */
-    public static final double angleKP = 10.0;
+    public static final double angleKP = 7.0;
     public static final double angleKI = 0.0;
-    public static final double angleKD = 0.0005;
+    public static final double angleKD = 0.00005;
     public static final double angleKFF = 0.0;
 
     /* Drive Motor PID Values */

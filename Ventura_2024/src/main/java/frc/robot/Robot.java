@@ -51,13 +51,18 @@ public class Robot extends TimedRobot {
   public void disabledInit() {}
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    //LimelightHelpers.setLEDMode_ForceOff(Constants.Sensors.limef);
+
+    //LimelightHelpers.setLEDMode_ForceBlink(Constants.Sensors.limef);
+
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
+    //LimelightHelpers.setLEDMode_ForceOff(Constants.Sensors.limef);
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -74,6 +79,7 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    //LimelightHelpers.setLEDMode_ForceOff(Constants.Sensors.limef);
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }

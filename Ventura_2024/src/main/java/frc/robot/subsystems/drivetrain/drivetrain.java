@@ -1,6 +1,7 @@
 package frc.robot.subsystems.drivetrain;
 
 
+import com.ctre.phoenix6.configs.MountPoseConfigs;
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -27,7 +28,6 @@ public class drivetrain extends SubsystemBase{
 
     private Pigeon2 gyro;
 
-
     private swerveModule[] swerveModules;
     private SwerveModulePosition[] swervePositions;
 
@@ -39,6 +39,7 @@ public class drivetrain extends SubsystemBase{
     public drivetrain(){
         gyro = new Pigeon2(1);
         gyro.getConfigurator().apply(new Pigeon2Configuration());
+        gyro.getConfigurator().apply(new MountPoseConfigs().withMountPoseRoll(180));
         gyro.setYaw(0);
         
 
@@ -206,8 +207,6 @@ public class drivetrain extends SubsystemBase{
     
     public void updateOdometry() {
 
-        
-
         swervePoseEstimator.update(getOdoYaw(),
                                    getPositions());
 
@@ -239,7 +238,6 @@ public class drivetrain extends SubsystemBase{
   
             }
 
-  
             if(!rejectUpdate){
   
                 swervePoseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.02,.02,0.005));

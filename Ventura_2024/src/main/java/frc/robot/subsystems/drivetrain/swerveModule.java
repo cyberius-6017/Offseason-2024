@@ -10,8 +10,6 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
-import com.ctre.phoenix6.controls.PositionVoltage;
-import com.ctre.phoenix6.controls.StaticBrake;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
@@ -72,6 +70,8 @@ public class swerveModule extends SubsystemBase {
         steerMotor.getConfigurator().apply(new CurrentLimitsConfigs().withStatorCurrentLimit(Constants.Swerve.angleContinuousCurrentLimit));
         steerMotor.getConfigurator().apply(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake).withInverted(InvertedValue.Clockwise_Positive));
         steerMotor.getConfigurator().apply(new FeedbackConfigs().withSensorToMechanismRatio(Constants.Swerve.angleGearRatio));
+        angleEncoder.getAbsolutePosition().waitForUpdate(0.2);
+        System.out.println("CANcoder booted");
         resetToAbsolute();
 
         driveMotor = new TalonFX(moduleConstants.driveMotorID);
@@ -85,6 +85,7 @@ public class swerveModule extends SubsystemBase {
         driveMotor.getConfigurator().apply(new FeedbackConfigs().withSensorToMechanismRatio(Constants.Swerve.driveGearRatio));
         driveMotor.setPosition(0.0);
 
+        lastAngle = getState().angle;
 
     }
 
@@ -98,12 +99,12 @@ public class swerveModule extends SubsystemBase {
 
     private void setAngle(SwerveModuleState desiredState) {
 
-        // Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01))
-        //         ? lastAngle
-        //         : desiredState.angle;
+        Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01))
+                ? lastAngle
+                : desiredState.angle;
     
-        steerMotor.setControl(anglePosition.withPosition(desiredState.angle.getRotations()));
-        //lastAngle = angle;
+        steerMotor.setControl(anglePosition.withPosition(angle.getRotations()));
+        lastAngle = angle;
 
     }
 
@@ -124,7 +125,6 @@ public class swerveModule extends SubsystemBase {
     }
 
     public Rotation2d getCANCoderAngle() {
-
 
         double angle = ((angleEncoder.getAbsolutePosition().getValue())) - encoderOffset.getRotations();
         return Rotation2d.fromRotations(angle);
