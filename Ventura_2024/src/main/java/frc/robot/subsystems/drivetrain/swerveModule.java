@@ -50,7 +50,7 @@ public class swerveModule extends SubsystemBase {
                                                                                    Constants.Swerve.driveKA);
 
     private final DutyCycleOut driveDutyCycle = new DutyCycleOut(0);
-    private final VelocityVoltage driveVelocity = new VelocityVoltage(0);
+    private final VelocityDutyCycle driveVelocity = new VelocityDutyCycle(0);
 
     private final PositionDutyCycle anglePosition = new PositionDutyCycle(0);
 
