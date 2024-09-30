@@ -187,10 +187,10 @@ public final class Constants {
     }
   }
 
-     public static final class Intake {
+    public static final class Intake {
       public static final int intakeID = 44;
       public static final int intakeIndexID = 45;
 
-      public static final double rollerSpeed = 50.0;
+      public static final double rollerSpeed = 75.0;
     }
 }
