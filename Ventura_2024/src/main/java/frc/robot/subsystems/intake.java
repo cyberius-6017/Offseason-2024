@@ -24,32 +24,10 @@ public class intake extends SubsystemBase {
     }
 
     public void roll() {
-        if (rolling) {
-            if (!getNoteStatus()) {
-                intakeVelocity.Velocity = rollerSpeed;
-                motorIntake.setControl(intakeVelocity);
-                motorIndexIntake.setControl(intakeVelocity);
-            } else {
-                intakeVelocity.Velocity = 0.0;
-                motorIntake.setControl(intakeVelocity);
-                motorIndexIntake.setControl(intakeVelocity);
-            }
-        } else {
-            intakeVelocity.Velocity = 0.0;
-            motorIntake.setControl(intakeVelocity);
-            motorIndexIntake.setControl(intakeVelocity);
-        }
+        intakeVelocity.Velocity = rollerSpeed;
+        motorIntake.setControl(intakeVelocity);
+        motorIndexIntake.setControl(intakeVelocity);
     }
-
-    public void startRoll() {
-        rolling = true;
-        roll();
-    }
-    public void stopRoll() {
-        rolling = false;
-        roll();
-    }
-
 
     public boolean getNoteStatus() {
         return isNoteIn.get();
