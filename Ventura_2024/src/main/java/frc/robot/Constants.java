@@ -30,6 +30,8 @@ public final class Constants {
     public static final String limef = "limelight-back";
     //public static final String limeb = "limelight-back";
 
+    public static final int intakeIndex = 0;
+
   }
 
   public static class OperatorConstants {
@@ -176,4 +178,11 @@ public final class Constants {
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, encoderOffset);
     }
   }
+
+     public static final class Intake {
+      public static final int intakeID = 44;
+      public static final int intakeIndexID = 45;
+
+      public static final double rollerSpeed = 50.0;
+    }
 }

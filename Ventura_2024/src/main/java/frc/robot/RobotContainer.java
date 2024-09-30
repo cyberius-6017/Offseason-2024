@@ -11,6 +11,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.drivetrainCommandDefault;
 import frc.robot.commands.drivetrainCommandTank;
+import frc.robot.commands.intakeCommand;
+import frc.robot.subsystems.intake;
+// import frc.robot.commands.drivetrainCommand;
+// import frc.robot.commands.drivetrainTankCommand;
 import frc.robot.subsystems.drivetrain.drivetrain;
 
 public class RobotContainer {
@@ -18,11 +22,15 @@ public class RobotContainer {
   private SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   private final XboxController driverController = new XboxController(Constants.OperatorConstants.driverDriveTrainPort);
+  private final XboxController mechanismController = new XboxController(Constants.OperatorConstants.driverMechanismsPort);
 
   private final drivetrain m_Drivetrain = new drivetrain();
+  private final intake m_Intake = new intake(Constants.Intake.intakeID, Constants.Intake.intakeIndexID, Constants.Sensors.intakeIndex, Constants.Intake.rollerSpeed);
 
   private Trigger tankTrigger = new Trigger((()-> Math.abs(driverController.getRightTriggerAxis()) > 0.2))
                             .or(new Trigger((()-> Math.abs(driverController.getLeftTriggerAxis()) > 0.2)));
+
+  private Trigger intakeTrigger = new Trigger((()-> Math.abs(mechanismController.getRightTriggerAxis()) > 0.2));
 
   public void registerCommands(){
 
@@ -43,8 +51,6 @@ public class RobotContainer {
                                    ()-> -driverController.getRightX(),
                                    ()-> driverController.getBButtonPressed(),
                                    ()-> driverController.getYButtonPressed()));
-
-
                         
 
     configureBindings();
@@ -59,6 +65,9 @@ public class RobotContainer {
                                                  ()-> driverController.getLeftTriggerAxis(),
                                                  ()-> (Math.abs(driverController.getRightTriggerAxis()) > 0.2 
                                                     || Math.abs(driverController.getLeftTriggerAxis()) > 0.2)));
+
+    intakeTrigger.onTrue(new intakeCommand(m_Intake,
+                        ()-> mechanismController.getRightTriggerAxis()));
     
   }
 
