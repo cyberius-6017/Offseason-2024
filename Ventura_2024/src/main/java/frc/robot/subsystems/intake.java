@@ -23,7 +23,6 @@ public class intake extends SubsystemBase {
     private TalonFX motorIndex;
     private DigitalInput isNoteIn;
     private double rollerSpeed;
-    private boolean rolling = false;
     private int intakeID;
     private int intakeIndexID;
     private final VelocityDutyCycle intakeVelocity = new VelocityDutyCycle(0);
@@ -62,7 +61,7 @@ public class intake extends SubsystemBase {
     public void roll() {
         intakeVelocity.Velocity = rollerSpeed;
         motorIntake.setControl(intakeVelocity);
-        motorIndexIntake.setControl(intakeVelocity);
+        motorIndex.setControl(intakeVelocity);
     }
     public void setRoller(double speed){
   
