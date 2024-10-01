@@ -34,6 +34,26 @@ public final class Constants {
 
   }
 
+  public static final class Intake {
+  
+    public static final int intakeID = 44;
+    public static final int intakeIndexID = 45;
+
+    public static final double rollerSpeed = 50.0;
+
+    public static final double intakeCurrentLimit = 80.0;
+
+    public static final double intakeKP = 2.5;
+    public static final double intakeKI = 0.0;
+    public static final double intakeKD = 0.00001;
+
+    public static final double indexKP = 1.2;
+    public static final double indexKI = 0.0;
+    public static final double indexKD = 0.00001;
+
+    public static final double closedLoopRamp = 0.1;
+  }
+
   public static class OperatorConstants {
 
     public static final int driverDriveTrainPort = 0;
@@ -130,7 +150,7 @@ public final class Constants {
     /* Angle Encoder Invert */
     public static final boolean CANcoderInv = false;
 
-    public static final double openLoopRamp = 0.25;
+    public static final double openLoopRamp = 0.15;
     public static final double closedLoopRamp = 0.0;
 
     /* Module Specific Constants */
@@ -179,10 +199,5 @@ public final class Constants {
     }
   }
 
-     public static final class Intake {
-      public static final int intakeID = 44;
-      public static final int intakeIndexID = 45;
-
-      public static final double rollerSpeed = 50.0;
-    }
+  
 }

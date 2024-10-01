@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.drivetrainCommandDefault;
 import frc.robot.commands.drivetrainCommandTank;
 import frc.robot.commands.intakeCommand;
+import frc.robot.commands.intakeCommandDefault;
 import frc.robot.subsystems.intake;
 // import frc.robot.commands.drivetrainCommand;
 // import frc.robot.commands.drivetrainTankCommand;
@@ -30,7 +31,7 @@ public class RobotContainer {
   private Trigger tankTrigger = new Trigger((()-> Math.abs(driverController.getRightTriggerAxis()) > 0.2))
                             .or(new Trigger((()-> Math.abs(driverController.getLeftTriggerAxis()) > 0.2)));
 
-  private Trigger intakeTrigger = new Trigger((()-> Math.abs(mechanismController.getRightTriggerAxis()) > 0.2));
+  //private Trigger intakeTrigger = new Trigger((()-> Math.abs(mechanismController.getRightTriggerAxis()) > 0.2));
 
   public void registerCommands(){
 
@@ -51,6 +52,8 @@ public class RobotContainer {
                                    ()-> -driverController.getRightX(),
                                    ()-> driverController.getBButtonPressed(),
                                    ()-> driverController.getYButtonPressed()));
+                              
+    m_Intake.setDefaultCommand(new intakeCommandDefault(m_Intake, ()-> mechanismController.getRightTriggerAxis(), ()-> mechanismController.getLeftTriggerAxis()));
                         
 
     configureBindings();
@@ -66,8 +69,8 @@ public class RobotContainer {
                                                  ()-> (Math.abs(driverController.getRightTriggerAxis()) > 0.2 
                                                     || Math.abs(driverController.getLeftTriggerAxis()) > 0.2)));
 
-    intakeTrigger.onTrue(new intakeCommand(m_Intake,
-                        ()-> mechanismController.getRightTriggerAxis()));
+    // intakeTrigger.onTrue(new intakeCommand(m_Intake,
+    //                     ()-> mechanismController.getRightTriggerAxis()));
     
   }
 

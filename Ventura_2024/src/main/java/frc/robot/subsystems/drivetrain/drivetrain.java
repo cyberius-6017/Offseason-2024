@@ -40,7 +40,7 @@ public class drivetrain extends SubsystemBase{
         gyro = new Pigeon2(1);
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.getConfigurator().apply(new MountPoseConfigs().withMountPoseRoll(180));
-        gyro.setYaw(0);
+        zeroPigeon();
         
 
         field = new Field2d();
