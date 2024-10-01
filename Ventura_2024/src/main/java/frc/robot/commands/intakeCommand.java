@@ -18,10 +18,8 @@ public class intakeCommand extends Command {
 
     @Override
     public void execute() {
-        if (strengthIntake.get() > 0.25) {
-            intake.startRoll();
-        } else {
-            intake.stopRoll();
+        if (strengthIntake.get() > 0.20 && !intake.getNoteStatus()) {
+            intake.roll();
         }
     }
 }
