@@ -1,23 +1,20 @@
 package frc.robot.commands;
 
 import java.util.function.Supplier;
-
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain.drivetrain;
 
-public class alignSpeakerCommand extends Command {
+public class drivetrainCommandAlignSpeaker extends Command {
     
     private drivetrain driveTrain;
     private Supplier<Double> stickX, stickY;
     private Supplier<Boolean> isGoing;
-    private double deltaA;
-    private Rotation2d angle;
+    private double angle;
     private Translation2d delta, roboPos;
 
-    public alignSpeakerCommand(drivetrain drivetrain, Supplier<Double> stickX, Supplier<Double> stickY, Supplier<Boolean> isGoing){
+    public drivetrainCommandAlignSpeaker(drivetrain drivetrain, Supplier<Double> stickX, Supplier<Double> stickY, Supplier<Boolean> isGoing){
         this.driveTrain = drivetrain;
         this.stickX = stickX;
         this.stickY = stickY;
@@ -28,12 +25,29 @@ public class alignSpeakerCommand extends Command {
 
     @Override
     public void execute() {
-        roboPos = driveTrain.getSwervePose().getTranslation();
+        roboPos = driveTrain.getPose().getTranslation();
         delta = roboPos.minus(Constants.Field.speakBlue);
-        angle = delta.getAngle();
-        System.out.println("Angle: " + angle.getDegrees());
+        angle = delta.getAngle().getDegrees();
 
-        driveTrain.alignRobotSpeaker(stickX.get(), stickY.get(), angle.getDegrees());
+        if(angle > 0){
+
+            angle *= Constants.Swerve.alignSpkKP;
+
+        }
+
+        else {
+
+            angle *= -Constants.Swerve.alignSpkKP;
+
+        }
+
+        if(Math.abs(angle) < 0.1) {
+
+            angle = 0.0;
+
+        }
+
+        driveTrain.alignRobotSpeaker(stickX.get(), stickY.get(), angle);
     }
 
     @Override

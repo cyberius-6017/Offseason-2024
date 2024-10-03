@@ -176,7 +176,7 @@ public class drivetrain extends SubsystemBase{
         //return swervePoseEstimator.getEstimatedPosition();
     }
 
-      public Pose2d getSwervePose() {
+    public Pose2d getSwervePose() {
 
         return swervePoseEstimator.getEstimatedPosition();
         //return swervePoseEstimator.getEstimatedPosition();
@@ -196,8 +196,8 @@ public class drivetrain extends SubsystemBase{
     }
 
     public void alignRobotSpeaker(double stickX, double stickY, double deltaAngles){
-        //TODO: Check open loop
-        this.drive(new Translation2d(stickX, stickY),deltaAngles*Constants.Swerve.alignSpkKP,true,true);
+
+        this.drive(new Translation2d(stickX, stickY).times(Constants.Swerve.maxSpeed), deltaAngles * Constants.Swerve.maxAngularVelocity,true,true);
     
     }
 
@@ -266,6 +266,7 @@ public class drivetrain extends SubsystemBase{
     public void periodic() {
              
         SmartDashboard.putString("Odometry: ", swerveOdometry.getPoseMeters().getTranslation().toString());
+        SmartDashboard.putNumber("Rotation: ", getPose().getRotation().getDegrees());
         SmartDashboard.putNumber("Pigeon", getYaw().getDegrees());
         SmartDashboard.putNumber("Pigeon Odo", getOdoYaw().getDegrees());
 
@@ -289,11 +290,6 @@ public class drivetrain extends SubsystemBase{
         SmartDashboard.putNumber("Angle EFR: ", swerveModules[1].getCANCoderAngle().getDegrees());
         SmartDashboard.putNumber("Angle ERL: ", swerveModules[2].getCANCoderAngle().getDegrees());
         SmartDashboard.putNumber("Angle ERR: ", swerveModules[3].getCANCoderAngle().getDegrees());
-
-        SmartDashboard.putString("Position: ", getPose().getTranslation().toString());
-        SmartDashboard.putNumber("Robot rotation: ", getPose().getRotation().getDegrees());
-
-
 
         SmartDashboard.putNumberArray("SwerveModuleStates", loggingModulesStates);
 
