@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.alignSpeakerCommand;
 import frc.robot.commands.drivetrainCommandDefault;
 import frc.robot.commands.drivetrainCommandTank;
 import frc.robot.commands.intakeCommand;
@@ -30,6 +31,8 @@ public class RobotContainer {
 
   private Trigger tankTrigger = new Trigger((()-> Math.abs(driverController.getRightTriggerAxis()) > 0.2))
                             .or(new Trigger((()-> Math.abs(driverController.getLeftTriggerAxis()) > 0.2)));
+
+  private Trigger alignSpkTrigger = new Trigger(()-> driverController.getXButton());
 
   //private Trigger intakeTrigger = new Trigger((()-> Math.abs(mechanismController.getRightTriggerAxis()) > 0.2));
 
@@ -68,6 +71,8 @@ public class RobotContainer {
                                                  ()-> driverController.getLeftTriggerAxis(),
                                                  ()-> (Math.abs(driverController.getRightTriggerAxis()) > 0.2 
                                                     || Math.abs(driverController.getLeftTriggerAxis()) > 0.2)));
+
+    alignSpkTrigger.onTrue(new alignSpeakerCommand(m_Drivetrain,()-> -driverController.getLeftX(),()-> -driverController.getLeftY(), ()-> driverController.getXButton()));
 
     // intakeTrigger.onTrue(new intakeCommand(m_Intake,
     //                     ()-> mechanismController.getRightTriggerAxis()));
