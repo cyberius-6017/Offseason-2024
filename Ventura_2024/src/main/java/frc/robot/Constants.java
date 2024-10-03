@@ -47,7 +47,7 @@ public final class Constants {
     public static final double intakeKI = 0.0;
     public static final double intakeKD = 0.00001;
 
-    public static final double indexKP = 1.2;
+    public static final double indexKP = 3.5;
     public static final double indexKI = 0.0;
     public static final double indexKD = 0.00001;
 

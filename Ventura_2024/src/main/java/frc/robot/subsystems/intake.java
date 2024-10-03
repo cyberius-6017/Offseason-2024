@@ -62,7 +62,7 @@ public class intake extends SubsystemBase {
     public void roll() {
         intakeVelocity.Velocity = rollerSpeed;
         motorIntake.setControl(intakeVelocity);
-        motorIndexIntake.setControl(intakeVelocity);
+        motorIndex.setControl(intakeVelocity);
     }
     public void setRoller(double speed){
   
