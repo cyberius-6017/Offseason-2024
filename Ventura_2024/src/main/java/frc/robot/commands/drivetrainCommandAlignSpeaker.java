@@ -1,9 +1,12 @@
 package frc.robot.commands;
 
 import java.util.function.Supplier;
+
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.drivetrain.drivetrain;
 
 public class drivetrainCommandAlignSpeaker extends Command {
@@ -11,8 +14,8 @@ public class drivetrainCommandAlignSpeaker extends Command {
     private drivetrain driveTrain;
     private Supplier<Double> stickX, stickY;
     private Supplier<Boolean> isGoing;
-    private double angle;
-    private Translation2d delta, roboPos;
+    private Translation2d deltaPos, robotPos;
+    private Rotation2d currentRot;
 
     public drivetrainCommandAlignSpeaker(drivetrain drivetrain, Supplier<Double> stickX, Supplier<Double> stickY, Supplier<Boolean> isGoing){
         this.driveTrain = drivetrain;
@@ -25,29 +28,25 @@ public class drivetrainCommandAlignSpeaker extends Command {
 
     @Override
     public void execute() {
-        roboPos = driveTrain.getPose().getTranslation();
-        delta = roboPos.minus(Constants.Field.speakBlue);
-        angle = delta.getAngle().getDegrees();
+        
+        robotPos = driveTrain.getPose().getTranslation();
+        deltaPos = robotPos.minus(Constants.Field.speakBlue);
+        currentRot = driveTrain.getPose().getRotation();
+        
+        double setPoint = deltaPos.getAngle().getDegrees();
+        double error = setPoint - currentRot.getDegrees();
 
-        if(angle > 0){
 
-            angle *= Constants.Swerve.alignSpkKP;
+        if(Math.abs(error) < 0.3) {
 
-        }
-
-        else {
-
-            angle *= -Constants.Swerve.alignSpkKP;
-
-        }
-
-        if(Math.abs(angle) < 0.1) {
-
-            angle = 0.0;
+            error = 0.0;
+            LimelightHelpers.setLEDMode_ForceBlink(Constants.Sensors.limef);
 
         }
+        // System.out.print("Setpoint: " + setPoint + " ");
+        // System.out.println("Error: " + error);
 
-        driveTrain.alignRobotSpeaker(stickX.get(), stickY.get(), angle);
+        driveTrain.alignRobotSpeaker(stickX.get(), stickY.get(), error * Constants.Swerve.alignSpkKP);
     }
 
     @Override
@@ -59,6 +58,7 @@ public class drivetrainCommandAlignSpeaker extends Command {
 
             
         }
+        LimelightHelpers.setLEDMode_ForceOff(Constants.Sensors.limef);
         return true;
     }    
 

@@ -23,8 +23,8 @@ public final class CTREConfig {
         swerveSteerConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         swerveSteerConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
-        //swerveSteerConfig.Feedback.SensorToMechanismRatio = Constants.Swerve.angleGearRatio;
-        //swerveSteerConfig.ClosedLoopGeneral.ContinuousWrap = true;
+        swerveSteerConfig.Feedback.SensorToMechanismRatio = Constants.Swerve.angleGearRatio;
+        swerveSteerConfig.ClosedLoopGeneral.ContinuousWrap = true;
 
         swerveSteerConfig.CurrentLimits.StatorCurrentLimit = Constants.Swerve.angleContinuousCurrentLimit;
 

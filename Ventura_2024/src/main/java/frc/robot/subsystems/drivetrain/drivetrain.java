@@ -196,8 +196,9 @@ public class drivetrain extends SubsystemBase{
     }
 
     public void alignRobotSpeaker(double stickX, double stickY, double deltaAngles){
+        //TODO: Check field drive
 
-        this.drive(new Translation2d(stickX, stickY).times(Constants.Swerve.maxSpeed), deltaAngles * Constants.Swerve.maxAngularVelocity,true,true);
+        this.drive(new Translation2d(stickX, stickY).times(Constants.Swerve.maxSpeed), deltaAngles ,true,true);
     
     }
 
@@ -236,7 +237,7 @@ public class drivetrain extends SubsystemBase{
   
                 }
   
-                if(mt1.rawFiducials[0].distToCamera > 1.5) {
+                if(mt1.rawFiducials[0].distToCamera > 2.5) {
   
                     rejectUpdate = true;
   

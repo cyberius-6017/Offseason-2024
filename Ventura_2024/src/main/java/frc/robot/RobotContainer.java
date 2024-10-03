@@ -72,7 +72,10 @@ public class RobotContainer {
                                                  ()-> (Math.abs(driverController.getRightTriggerAxis()) > 0.2 
                                                     || Math.abs(driverController.getLeftTriggerAxis()) > 0.2)));
 
-    alignSpkTrigger.onTrue(new drivetrainCommandAlignSpeaker(m_Drivetrain,()-> -driverController.getLeftX(),()-> -driverController.getLeftY(), ()-> driverController.getXButton()));
+    alignSpkTrigger.onTrue(new drivetrainCommandAlignSpeaker(m_Drivetrain,
+                                                             ()-> -driverController.getLeftY(),
+                                                             ()-> -driverController.getLeftX(), 
+                                                             ()-> driverController.getXButton()));
 
     // intakeTrigger.onTrue(new intakeCommand(m_Intake,
     //                     ()-> mechanismController.getRightTriggerAxis()));
