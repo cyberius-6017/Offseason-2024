@@ -4,8 +4,7 @@ import com.ctre.phoenix6.configs.ClosedLoopRampsConfigs;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.NeutralOut;
+
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -23,15 +22,10 @@ public class intake extends SubsystemBase {
     private TalonFX motorIndex;
     private DigitalInput isNoteIn;
     private double rollerSpeed;
-    private boolean rolling = false;
-    private int intakeID;
-    private int intakeIndexID;
     private final VelocityDutyCycle intakeVelocity = new VelocityDutyCycle(0);
     private final VelocityDutyCycle indexVelocity = new VelocityDutyCycle(0);
 
     public intake(int intakeID, int intakeIndexID, int sensorID, double rollerSpeed) {
-        this.intakeID = intakeID;
-        this.intakeIndexID = intakeIndexID;
         this.isNoteIn = new DigitalInput(sensorID);
         this.rollerSpeed = rollerSpeed;
 

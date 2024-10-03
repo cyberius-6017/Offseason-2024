@@ -88,6 +88,8 @@ public final class Constants {
     public static final double steerPPkI = 0.0;
     public static final double steerPPkD = 0.0001;
 
+    public static final double alignSpkKP = 0.1;
+
     /* Swerve Profiling Values */
     public static final double maxSpeed = 6.5; // meters per second
     public static final double maxAngularVelocity = 12.5;
@@ -199,5 +201,9 @@ public final class Constants {
     }
   }
 
-  
+  public static final class Field {
+    public static final Translation2d speakRed = new Translation2d(16.40, 5.57);
+
+    public static final Translation2d speakBlue = new Translation2d(0.2, 5.57);
+  }
 }
