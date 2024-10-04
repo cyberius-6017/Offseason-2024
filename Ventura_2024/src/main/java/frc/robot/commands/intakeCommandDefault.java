@@ -24,7 +24,7 @@ public class intakeCommandDefault extends Command{
         if(Math.abs(lTrigger.get() - rTrigger.get()) > 0.2){
         
             //intake.setRoller(lTrigger.get() - rTrigger.get());
-            intake.setIntakeVelocity(60.0);
+            intake.setIntakeVelocity(80.0);
         }
 
         else {

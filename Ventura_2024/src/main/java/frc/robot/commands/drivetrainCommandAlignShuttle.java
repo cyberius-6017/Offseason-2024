@@ -12,7 +12,7 @@ import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.drivetrain.drivetrain;
 
-public class drivetrainCommandAlignSpeaker extends Command {
+public class drivetrainCommandAlignShuttle extends Command {
     
     private drivetrain driveTrain;
     private Supplier<Double> stickX, stickY;
@@ -20,7 +20,7 @@ public class drivetrainCommandAlignSpeaker extends Command {
     private Translation2d deltaPos, robotPos;
     private Rotation2d currentRot;
 
-    public drivetrainCommandAlignSpeaker(drivetrain drivetrain, Supplier<Double> stickX, Supplier<Double> stickY, Supplier<Boolean> isGoing){
+    public drivetrainCommandAlignShuttle(drivetrain drivetrain, Supplier<Double> stickX, Supplier<Double> stickY, Supplier<Boolean> isGoing){
         this.driveTrain = drivetrain;
         this.stickX = stickX;
         this.stickY = stickY;
@@ -34,13 +34,13 @@ public class drivetrainCommandAlignSpeaker extends Command {
         Optional<Alliance> ally = DriverStation.getAlliance();
 
         robotPos = driveTrain.getPose().getTranslation();
-        deltaPos = robotPos.minus(Constants.Field.speakBlue);
+        deltaPos = robotPos.minus(Constants.Field.shuttleBlue);
         if (ally.isPresent()) {
             if (ally.get() == Alliance.Red) {
-                deltaPos = robotPos.minus(Constants.Field.speakRed);
+                deltaPos = robotPos.minus(Constants.Field.shuttleRed);
             }
             if (ally.get() == Alliance.Blue) {
-                deltaPos = robotPos.minus(Constants.Field.speakBlue);
+                deltaPos = robotPos.minus(Constants.Field.shuttleBlue);
             }
         }
         currentRot = driveTrain.getPose().getRotation();

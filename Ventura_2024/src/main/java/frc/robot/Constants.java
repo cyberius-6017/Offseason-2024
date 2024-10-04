@@ -203,7 +203,9 @@ public final class Constants {
 
   public static final class Field {
     public static final Translation2d speakRed = new Translation2d(16.40, 5.54);
-
     public static final Translation2d speakBlue = new Translation2d(0.14, 5.54);
+
+    public static final Translation2d shuttleRed = new Translation2d(15.64, 7.25);
+    public static final Translation2d shuttleBlue = new Translation2d(0.9, 7.25);
   }
 }
