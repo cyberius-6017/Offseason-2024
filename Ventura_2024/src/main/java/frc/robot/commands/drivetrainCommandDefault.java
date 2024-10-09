@@ -8,6 +8,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.subsystems.handler;
 import frc.robot.subsystems.drivetrain.drivetrain;
 
 public class drivetrainCommandDefault extends Command{
@@ -16,6 +17,7 @@ public class drivetrainCommandDefault extends Command{
     private Supplier<Double> translation, strafe, rotation;
     private Supplier<Boolean> changeDrive, resetPigeon;
     private boolean isRobotCentric = false;
+    private handler handler;
 
     
     private SlewRateLimiter translationLimit = new SlewRateLimiter(2.0);
@@ -24,9 +26,10 @@ public class drivetrainCommandDefault extends Command{
 
     
 
-    public drivetrainCommandDefault(drivetrain drivetrain, Supplier<Double> translation, Supplier<Double> strafe, Supplier<Double> rotation, Supplier<Boolean> changeDrive, Supplier<Boolean> resetPigeon){
+    public drivetrainCommandDefault(drivetrain drivetrain,handler handler, Supplier<Double> translation, Supplier<Double> strafe, Supplier<Double> rotation, Supplier<Boolean> changeDrive, Supplier<Boolean> resetPigeon){
 
         this.driveTrain = drivetrain;
+        this.handler = handler;
         this.translation = translation;
         this.strafe = strafe;
         this.rotation = rotation;
@@ -41,6 +44,8 @@ public class drivetrainCommandDefault extends Command{
 
     @Override
     public void execute() {
+
+        handler.setRobotPose(driveTrain.getPose());
 
         if(changeDrive.get()){
 

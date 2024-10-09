@@ -21,13 +21,11 @@ public class intake extends SubsystemBase {
     private TalonFX motorIntake;
     private TalonFX motorIndex;
     private DigitalInput isNoteIn;
-    private double rollerSpeed;
     private final VelocityDutyCycle intakeVelocity = new VelocityDutyCycle(0);
     private final VelocityDutyCycle indexVelocity = new VelocityDutyCycle(0);
 
     public intake(int intakeID, int intakeIndexID, int sensorID, double rollerSpeed) {
         this.isNoteIn = new DigitalInput(sensorID);
-        this.rollerSpeed = rollerSpeed;
 
         motorIntake = new TalonFX(intakeID);
         motorIndex = new TalonFX(intakeIndexID);
@@ -53,10 +51,10 @@ public class intake extends SubsystemBase {
 
     }
 
-    public void roll() {
-        intakeVelocity.Velocity = rollerSpeed;
-        motorIntake.setControl(intakeVelocity);
-        motorIndex.setControl(intakeVelocity);
+    public void roll(double velocity) {
+        intakeVelocity.Velocity = velocity;
+        motorIntake.setControl(intakeVelocity.withVelocity(velocity));
+        motorIndex.setControl(indexVelocity.withVelocity(velocity));
     }
     public void setRoller(double speed){
   
@@ -64,7 +62,6 @@ public class intake extends SubsystemBase {
         motorIndex.set(-speed);
 
     }
-
     public void stopRoller(){
 
         motorIntake.stopMotor();
@@ -72,10 +69,10 @@ public class intake extends SubsystemBase {
 
     }
 
-    public void setIntakeVelocity(double vel){
+    public void setIntakeVelocity(double velocity){
 
-        motorIntake.setControl(intakeVelocity.withVelocity(vel));
-        motorIndex.setControl(indexVelocity.withVelocity(vel));
+        motorIntake.setControl(intakeVelocity.withVelocity(velocity));
+        motorIndex.setControl(indexVelocity.withVelocity(velocity));
 
     }
 

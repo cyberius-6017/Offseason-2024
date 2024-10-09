@@ -15,7 +15,11 @@ import frc.robot.commands.drivetrainCommandDefault;
 import frc.robot.commands.drivetrainCommandTank;
 import frc.robot.commands.intakeCommand;
 import frc.robot.commands.intakeCommandDefault;
+import frc.robot.commands.shooterCommand;
+import frc.robot.commands.shooterCommandDefault;
+import frc.robot.subsystems.handler;
 import frc.robot.subsystems.intake;
+import frc.robot.subsystems.shooter;
 // import frc.robot.commands.drivetrainCommand;
 // import frc.robot.commands.drivetrainTankCommand;
 import frc.robot.subsystems.drivetrain.drivetrain;
@@ -28,7 +32,18 @@ public class RobotContainer {
   private final XboxController mechanismController = new XboxController(Constants.OperatorConstants.driverMechanismsPort);
 
   private final drivetrain m_Drivetrain = new drivetrain();
-  private final intake m_Intake = new intake(Constants.Intake.intakeID, Constants.Intake.intakeIndexID, Constants.Sensors.intakeIndex, Constants.Intake.rollerSpeed);
+  private final intake m_Intake = new intake(Constants.Intake.intakeID, 
+                                             Constants.Intake.intakeIndexID, 
+                                             Constants.Sensors.intakeIndex, 
+                                             Constants.Intake.rollerSpeed);
+  
+  private final shooter m_Shooter = new shooter(Constants.Shooter.shooterLeft, 
+                                                Constants.Shooter.shooterRight, 
+                                                Constants.Shooter.indexID, 
+                                                Constants.Shooter.pivotID, 
+                                                Constants.Shooter.encoderID, 
+                                                Constants.Shooter.encoderOffset);
+  private final handler m_Handler = new handler();
 
   private Trigger tankTrigger = new Trigger((()-> Math.abs(driverController.getRightTriggerAxis()) > 0.2))
                             .or(new Trigger((()-> Math.abs(driverController.getLeftTriggerAxis()) > 0.2)));
@@ -36,7 +51,8 @@ public class RobotContainer {
   private Trigger alignSpkTrigger = new Trigger(()-> driverController.getXButton());
   private Trigger alignShtTrigger = new Trigger(()-> driverController.getStartButton());
 
-  //private Trigger intakeTrigger = new Trigger((()-> Math.abs(mechanismController.getRightTriggerAxis()) > 0.2));
+  private Trigger intakeTrigger = new Trigger((()-> Math.abs(mechanismController.getRightTriggerAxis()) > 0.2));
+  private Trigger shooterTrigger = new Trigger((()-> Math.abs(mechanismController.getLeftTriggerAxis()) > 0.2));
 
   public void registerCommands(){
 
@@ -52,13 +68,19 @@ public class RobotContainer {
     autoChooser.addOption("EZ PATH", new PathPlannerAuto("EZ PATH"));
 
     m_Drivetrain.setDefaultCommand(new drivetrainCommandDefault(m_Drivetrain, 
+                                  m_Handler,
                                    ()-> -driverController.getLeftY(), 
                                    ()-> -driverController.getLeftX(),
                                    ()-> -driverController.getRightX(),
                                    ()-> driverController.getBButtonPressed(),
                                    ()-> driverController.getYButtonPressed()));
                               
-    m_Intake.setDefaultCommand(new intakeCommandDefault(m_Intake, ()-> mechanismController.getRightTriggerAxis(), ()-> mechanismController.getLeftTriggerAxis()));
+    m_Intake.setDefaultCommand(new intakeCommandDefault(m_Intake, 
+                               ()-> mechanismController.getRightTriggerAxis(), 
+                               ()-> mechanismController.getLeftTriggerAxis()));
+
+    m_Shooter.setDefaultCommand(new shooterCommandDefault(m_Shooter, m_Handler));
+    
                         
 
     configureBindings();
@@ -74,7 +96,8 @@ public class RobotContainer {
                                                  ()-> (Math.abs(driverController.getRightTriggerAxis()) > 0.2 
                                                     || Math.abs(driverController.getLeftTriggerAxis()) > 0.2)));
 
-    alignSpkTrigger.onTrue(new drivetrainCommandAlignSpeaker(m_Drivetrain,
+    alignSpkTrigger.onTrue(new drivetrainCommandAlignSpeaker(m_Drivetrain, 
+                                                             m_Handler,
                                                              ()-> -driverController.getLeftY(),
                                                              ()-> -driverController.getLeftX(), 
                                                              ()-> driverController.getXButton()));
@@ -84,8 +107,13 @@ public class RobotContainer {
                                                              ()-> -driverController.getLeftX(), 
                                                              ()-> driverController.getStartButton()));
 
-    // intakeTrigger.onTrue(new intakeCommand(m_Intake,
-    //                     ()-> mechanismController.getRightTriggerAxis()));
+    intakeTrigger.onTrue(new intakeCommand(m_Intake,
+                                           m_Shooter,
+                                           ()-> (mechanismController.getRightTriggerAxis() > 0.2)));
+    
+    shooterTrigger.onTrue(new shooterCommand(m_Shooter, 
+                                             m_Handler, 
+                                             ()-> mechanismController.getLeftTriggerAxis() > 0.2));
     
   }
 

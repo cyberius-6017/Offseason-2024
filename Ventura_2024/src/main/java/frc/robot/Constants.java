@@ -34,6 +34,39 @@ public final class Constants {
 
   }
 
+  public static final class Shooter {
+
+    public static final int encoderID = 60;
+    public static final double encoderOffset = 0.0;
+
+    public static final int indexID = 12;
+    public static final int pivotID = 13;
+    public static final int shooterLeft = 14;
+    public static final int shooterRight = 15;
+
+    public static final double shooterLKP = 1.0;
+    public static final double shooterLKI = 0.0;
+    public static final double shooterLKD = 0.0;
+
+    public static final double shooterRKP = 1.0;
+    public static final double shooterRKI = 0.0;
+    public static final double shooterRKD = 0.0;
+
+    public static final double indexKP = 0.0;
+    public static final double indexKI = 0.0;
+    public static final double indexKD = 0.0;
+
+    public static final double pivotKP = 3.0;
+    public static final double pivotKI = 0.0;
+    public static final double pivotKD = 0.0;
+
+    public static final double shooterCurrentLImit = 100;
+
+    public static final double closedLoopRamp = 0.1;
+
+
+  }
+
   public static final class Intake {
   
     public static final int intakeID = 44;

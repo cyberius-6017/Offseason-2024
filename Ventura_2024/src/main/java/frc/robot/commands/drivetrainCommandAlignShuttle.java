@@ -3,6 +3,8 @@ package frc.robot.commands;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -19,6 +21,9 @@ public class drivetrainCommandAlignShuttle extends Command {
     private Supplier<Boolean> isGoing;
     private Translation2d deltaPos, robotPos;
     private Rotation2d currentRot;
+
+    private SlewRateLimiter translationLimit = new SlewRateLimiter(2.0);
+    private SlewRateLimiter strafeLimit = new SlewRateLimiter(2.0);
 
     public drivetrainCommandAlignShuttle(drivetrain drivetrain, Supplier<Double> stickX, Supplier<Double> stickY, Supplier<Boolean> isGoing){
         this.driveTrain = drivetrain;
@@ -58,7 +63,12 @@ public class drivetrainCommandAlignShuttle extends Command {
         // System.out.print("Setpoint: " + setPoint + " ");
         // System.out.println("Error: " + error);
 
-        driveTrain.alignRobotSpeaker(stickX.get(), stickY.get(), error * Constants.Swerve.alignSpkKP);
+         double translationVal = translationLimit.calculate(MathUtil.applyDeadband(stickX.get(), 
+                                                                                  Constants.Swerve.stickDeadband));
+        double strafeVal = strafeLimit.calculate(MathUtil.applyDeadband(stickY.get(), 
+                                                                        Constants.Swerve.stickDeadband));
+
+        driveTrain.alignRobotSpeaker(translationVal, strafeVal, error * Constants.Swerve.alignSpkKP);
     }
 
     @Override

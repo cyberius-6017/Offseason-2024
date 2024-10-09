@@ -190,14 +190,13 @@ public class drivetrain extends SubsystemBase{
     }
 
     public void driveRobotRelative(ChassisSpeeds speeds){
-        //TODO: Check open loop
+  
         this.drive(new Translation2d(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond ),speeds.omegaRadiansPerSecond,false,true);
     
     }
 
     public void alignRobotSpeaker(double stickX, double stickY, double deltaAngles){
-        //TODO: Check field drive
-
+        
         this.drive(new Translation2d(stickX, stickY).times(Constants.Swerve.maxSpeed), deltaAngles ,true,true);
     
     }

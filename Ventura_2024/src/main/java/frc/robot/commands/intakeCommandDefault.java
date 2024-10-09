@@ -7,7 +7,8 @@ import frc.robot.subsystems.intake;
 
 public class intakeCommandDefault extends Command{
 
-    private intake intake;    private Supplier<Double> rTrigger, lTrigger;
+    private intake intake;    
+    private Supplier<Double> rTrigger, lTrigger;
 
     public intakeCommandDefault(intake intake,Supplier<Double> rTrigger, Supplier<Double> lTrigger){
 
@@ -21,16 +22,7 @@ public class intakeCommandDefault extends Command{
     @Override
     public void execute(){
 
-        if(Math.abs(lTrigger.get() - rTrigger.get()) > 0.2){
-        
-            //intake.setRoller(lTrigger.get() - rTrigger.get());
-            intake.setIntakeVelocity(80.0);
-        }
+        intake.stopRoller();
 
-        else {
-
-            intake.stopRoller();
-
-        }
     }
 }

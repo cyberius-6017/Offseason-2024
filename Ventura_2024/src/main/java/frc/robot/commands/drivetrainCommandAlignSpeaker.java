@@ -3,6 +3,8 @@ package frc.robot.commands;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -10,6 +12,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
+import frc.robot.subsystems.handler;
 import frc.robot.subsystems.drivetrain.drivetrain;
 
 public class drivetrainCommandAlignSpeaker extends Command {
@@ -19,9 +22,15 @@ public class drivetrainCommandAlignSpeaker extends Command {
     private Supplier<Boolean> isGoing;
     private Translation2d deltaPos, robotPos;
     private Rotation2d currentRot;
+    private handler handler;
 
-    public drivetrainCommandAlignSpeaker(drivetrain drivetrain, Supplier<Double> stickX, Supplier<Double> stickY, Supplier<Boolean> isGoing){
+
+    private SlewRateLimiter translationLimit = new SlewRateLimiter(2.0);
+    private SlewRateLimiter strafeLimit = new SlewRateLimiter(2.0);
+
+    public drivetrainCommandAlignSpeaker(drivetrain drivetrain, handler handler, Supplier<Double> stickX, Supplier<Double> stickY, Supplier<Boolean> isGoing){
         this.driveTrain = drivetrain;
+        this.handler = handler;
         this.stickX = stickX;
         this.stickY = stickY;
         this.isGoing = isGoing;
@@ -31,6 +40,8 @@ public class drivetrainCommandAlignSpeaker extends Command {
 
     @Override
     public void execute() {
+
+        handler.setRobotPose(driveTrain.getPose());
         Optional<Alliance> ally = DriverStation.getAlliance();
 
         robotPos = driveTrain.getPose().getTranslation();
@@ -57,8 +68,12 @@ public class drivetrainCommandAlignSpeaker extends Command {
         }
         // System.out.print("Setpoint: " + setPoint + " ");
         // System.out.println("Error: " + error);
+        double translationVal = translationLimit.calculate(MathUtil.applyDeadband(stickX.get(), 
+                                                                                  Constants.Swerve.stickDeadband));
+        double strafeVal = strafeLimit.calculate(MathUtil.applyDeadband(stickY.get(), 
+                                                                        Constants.Swerve.stickDeadband));
 
-        driveTrain.alignRobotSpeaker(stickX.get(), stickY.get(), error * Constants.Swerve.alignSpkKP);
+        driveTrain.alignRobotSpeaker(translationVal, strafeVal, error * Constants.Swerve.alignSpkKP);
     }
 
     @Override
