@@ -8,7 +8,8 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.handler;
+import frc.robot.commands.arduinoCommunicationCommand;
+import frc.robot.subsystems.arduinoComm;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -21,6 +22,8 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
   private handler m_handler;
 
+  private arduinoComm arduino = new arduinoComm();
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -31,6 +34,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     CameraServer.startAutomaticCapture(0);
+    arduino.setupArduino();
   }
 
   /**
@@ -58,6 +62,7 @@ public class Robot extends TimedRobot {
     //LimelightHelpers.setLEDMode_ForceOff(Constants.Sensors.limef);
 
     //LimelightHelpers.setLEDMode_ForceBlink(Constants.Sensors.limef);
+    arduino.ledMode("idle");
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
