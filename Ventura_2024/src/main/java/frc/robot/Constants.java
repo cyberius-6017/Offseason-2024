@@ -31,7 +31,13 @@ public final class Constants {
 
     public static final double climberRatio = 1000/49;
 
-    
+    public static final double climberKP = 2.5;
+    public static final double climberKI = 0.0;
+    public static final double climberKD = 0.0;
+
+    public static final double climberCurrentLImit = 80;
+
+    public static final double closedLoopRamp = 0.1;
 
 
   }

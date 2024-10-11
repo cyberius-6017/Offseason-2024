@@ -41,8 +41,8 @@ public class intakeCommand extends Command {
         if(state == 0){
 
             shooterPos = 0.51;
-            rollerVel =  100.0;
-            indexSpeed = 0.9;
+            rollerVel =  120.0;
+            indexSpeed = 0.7;
 
             if(shooter.getNoteStatus()){
 

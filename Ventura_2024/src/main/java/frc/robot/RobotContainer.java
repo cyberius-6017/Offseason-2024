@@ -18,6 +18,7 @@ import frc.robot.commands.intakeCommandDefault;
 import frc.robot.commands.shooterCommand;
 import frc.robot.commands.shooterCommandDefault;
 import frc.robot.commands.shooterCommandPassNote;
+import frc.robot.subsystems.climber;
 import frc.robot.subsystems.handler;
 import frc.robot.subsystems.intake;
 import frc.robot.subsystems.shooter;
@@ -46,6 +47,8 @@ public class RobotContainer {
                                                 Constants.Shooter.encoderOffset,
                                                 Constants.Sensors.shooterSensor);
   private final handler m_Handler = new handler();
+
+  private final climber m_Climber = new climber(Constants.Climber.climberLeftID, Constants.Climber.climberRightID);
 
   private Trigger tankTrigger = new Trigger((()-> Math.abs(driverController.getRightTriggerAxis()) > 0.2))
                             .or(new Trigger((()-> Math.abs(driverController.getLeftTriggerAxis()) > 0.2)));
@@ -81,7 +84,8 @@ public class RobotContainer {
                                    ()-> driverController.getBButtonPressed(),
                                    ()-> driverController.getYButtonPressed()));
                               
-    m_Intake.setDefaultCommand(new intakeCommandDefault(m_Intake));
+    m_Intake.setDefaultCommand(new intakeCommandDefault(m_Intake,
+                                                        ()-> mechanismController.getBButton()));
 
     m_Shooter.setDefaultCommand(new shooterCommandDefault(m_Shooter, 
                                                           m_Handler,
@@ -126,7 +130,8 @@ public class RobotContainer {
                                                   m_Handler,
                                                   ()-> mechanismController.getRightBumperPressed(),
                                                   ()-> mechanismController.getLeftBumperPressed())
-             .alongWith(new intakeCommandDefault(m_Intake)));
+             .alongWith(new intakeCommandDefault(m_Intake,
+                                                 ()-> mechanismController.getBButton())));
     
   }
 
