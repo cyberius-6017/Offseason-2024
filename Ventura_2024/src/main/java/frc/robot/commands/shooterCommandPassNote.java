@@ -48,7 +48,7 @@ public class shooterCommandPassNote extends Command {
             shooterPos = 0.51;
 
             if((Math.abs(shooter.getShooterVelocity()[0])  >= 70 || Math.abs(shooter.getShooterVelocity()[1])  >= 70)){
-             
+            handler.setShootReady(true);
                 //Blink
                 if(!lTrigger.get()){
 
@@ -83,6 +83,7 @@ public class shooterCommandPassNote extends Command {
             state = 0;
             handler.setCanIntake(true);
             handler.setCanShoot(false);
+            handler.setShootReady(false);
             finished = true;
 
         }

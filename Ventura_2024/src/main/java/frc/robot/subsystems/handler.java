@@ -11,6 +11,7 @@ public class handler extends SubsystemBase{
     public static boolean canAlignSpeaker;
     public static boolean canAlignDrive;
     public static boolean canClimb;
+    public static boolean shootReady;
     public static Pose2d robotPos;
 
 
@@ -55,6 +56,16 @@ public class handler extends SubsystemBase{
   }
   public boolean getCanShoot(){
     return canShoot;
+  }
+   ///////////////////////////////////////
+  public void setShootReady(boolean isOn){
+    shootReady = isOn;  
+  }
+  public void toggleShootReady(){
+    shootReady = !shootReady;
+  }
+  public boolean getShootReady(){
+    return shootReady;
   }
 
   ///////////////////////////////////////////
