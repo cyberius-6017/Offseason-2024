@@ -42,7 +42,7 @@ public class intakeCommand extends Command {
 
             shooterPos = 0.51;
             rollerVel =  120.0;
-            indexSpeed = 0.7;
+            indexSpeed = 0.25;
 
             if(shooter.getNoteStatus()){
 
@@ -59,6 +59,8 @@ public class intakeCommand extends Command {
             state = 0;
             handler.setCanIntake(false);
             handler.setCanShoot(true);
+
+            
             finished = true;
 
         }

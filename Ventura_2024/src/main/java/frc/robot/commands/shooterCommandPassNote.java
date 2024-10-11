@@ -48,8 +48,7 @@ public class shooterCommandPassNote extends Command {
             shooterPos = 0.51;
 
             if((Math.abs(shooter.getShooterVelocity()[0])  >= 70 || Math.abs(shooter.getShooterVelocity()[1])  >= 70)){
-             
-                //Blink
+
                 if(!lTrigger.get()){
 
                     startTime = Timer.getFPGATimestamp();
@@ -65,7 +64,7 @@ public class shooterCommandPassNote extends Command {
 
             indexSpeed = 1.0;
 
-            if(Timer.getFPGATimestamp() - startTime > 0.5){
+            if(Timer.getFPGATimestamp() - startTime > 0.8){
 
                 startTime = 0.0;
                 state ++;

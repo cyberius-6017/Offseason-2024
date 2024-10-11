@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.climberCommand;
+import frc.robot.commands.climberCommandDefault;
 import frc.robot.commands.drivetrainCommandAlignShuttle;
 import frc.robot.commands.drivetrainCommandAlignSpeaker;
 import frc.robot.commands.drivetrainCommandDefault;
@@ -63,6 +65,8 @@ public class RobotContainer {
 
   private Trigger abortTrigger = new Trigger(()-> mechanismController.getStartButtonPressed());
 
+  private Trigger climbTrigger = new Trigger(()-> mechanismController.getRightStickButtonPressed() && mechanismController.getLeftStickButtonPressed());
+
   public void registerCommands(){
 
   }
@@ -92,6 +96,12 @@ public class RobotContainer {
                                                           ()-> mechanismController.getRightBumperPressed(),
                                                           ()-> mechanismController.getLeftBumperPressed()));
     
+    m_Climber.setDefaultCommand(new climberCommandDefault(m_Climber,
+                                                          m_Handler,
+                                                          ()-> mechanismController.getXButtonPressed(),
+                                                          ()-> mechanismController.getYButton(),
+                                                          ()-> mechanismController.getLeftY(),
+                                                          ()-> mechanismController.getRightY()));
                         
 
     configureBindings();
@@ -131,12 +141,22 @@ public class RobotContainer {
                                                   ()-> mechanismController.getRightBumperPressed(),
                                                   ()-> mechanismController.getLeftBumperPressed())
              .alongWith(new intakeCommandDefault(m_Intake,
-                                                 ()-> mechanismController.getBButton())));
-    
+                                                 ()-> mechanismController.getBButton()))
+             .alongWith(new climberCommandDefault(m_Climber,
+                                                  m_Handler,
+                                                  ()-> mechanismController.getXButtonPressed(),
+                                                  ()-> mechanismController.getYButton(),
+                                                  ()-> mechanismController.getLeftY(),
+                                                  ()-> mechanismController.getRightY())));
+    climbTrigger.onTrue(new climberCommand(m_Climber, 
+                                             m_Handler));
+
   }
 
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return  autoChooser.getSelected();
   }
+
+  
 }
