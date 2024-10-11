@@ -47,10 +47,15 @@ public class shooterCommandPassNote extends Command {
             shooterVel = 100;
             shooterPos = 0.51;
 
-            if((Math.abs(shooter.getShooterVelocity()[0])  >= 70 || Math.abs(shooter.getShooterVelocity()[1])  >= 70) && !lTrigger.get()){
+            if((Math.abs(shooter.getShooterVelocity()[0])  >= 70 || Math.abs(shooter.getShooterVelocity()[1])  >= 70)){
+             
+                //Blink
+                if(!lTrigger.get()){
 
-                startTime = Timer.getFPGATimestamp();
-                state ++;
+                    startTime = Timer.getFPGATimestamp();
+                    state ++;
+
+                }
 
             }
 

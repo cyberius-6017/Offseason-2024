@@ -8,10 +8,12 @@ import frc.robot.subsystems.intake;
 public class intakeCommandDefault extends Command{
 
     private intake intake;
+    private Supplier<Boolean> bButton;
 
-    public intakeCommandDefault(intake intake){
+    public intakeCommandDefault(intake intake, Supplier<Boolean> bButton){
 
         this.intake = intake;
+        this.bButton = bButton;
 
         addRequirements(intake);
     }
@@ -19,7 +21,17 @@ public class intakeCommandDefault extends Command{
     @Override
     public void execute(){
 
-        intake.stopRoller();
+        if(bButton.get()){
+
+            intake.setIntakeVelocity(-120);
+
+        }
+
+        else{
+
+            intake.stopRoller();
+
+        }
 
     }
 }
