@@ -17,6 +17,7 @@ import frc.robot.commands.intakeCommand;
 import frc.robot.commands.intakeCommandDefault;
 import frc.robot.commands.shooterCommand;
 import frc.robot.commands.shooterCommandDefault;
+import frc.robot.commands.shooterCommandPassNote;
 import frc.robot.subsystems.handler;
 import frc.robot.subsystems.intake;
 import frc.robot.subsystems.shooter;
@@ -42,7 +43,8 @@ public class RobotContainer {
                                                 Constants.Shooter.indexID, 
                                                 Constants.Shooter.pivotID, 
                                                 Constants.Shooter.encoderID, 
-                                                Constants.Shooter.encoderOffset);
+                                                Constants.Shooter.encoderOffset,
+                                                Constants.Sensors.shooterSensor);
   private final handler m_Handler = new handler();
 
   private Trigger tankTrigger = new Trigger((()-> Math.abs(driverController.getRightTriggerAxis()) > 0.2))
@@ -51,8 +53,12 @@ public class RobotContainer {
   private Trigger alignSpkTrigger = new Trigger(()-> driverController.getXButton());
   private Trigger alignShtTrigger = new Trigger(()-> driverController.getStartButton());
 
-  private Trigger intakeTrigger = new Trigger((()-> Math.abs(mechanismController.getRightTriggerAxis()) > 0.2));
-  private Trigger shooterTrigger = new Trigger((()-> Math.abs(mechanismController.getLeftTriggerAxis()) > 0.2));
+  private Trigger intakeTrigger = new Trigger((()-> Math.abs(mechanismController.getRightTriggerAxis()) > 0.2))
+                             .and(new Trigger(()-> handler.canIntake));
+  private Trigger shooterTrigger = new Trigger((()-> Math.abs(mechanismController.getLeftTriggerAxis()) > 0.2))
+                              .and(new Trigger(()-> handler.canShoot));
+
+  private Trigger abortTrigger = new Trigger(()-> mechanismController.getStartButtonPressed());
 
   public void registerCommands(){
 
@@ -75,11 +81,12 @@ public class RobotContainer {
                                    ()-> driverController.getBButtonPressed(),
                                    ()-> driverController.getYButtonPressed()));
                               
-    m_Intake.setDefaultCommand(new intakeCommandDefault(m_Intake, 
-                               ()-> mechanismController.getRightTriggerAxis(), 
-                               ()-> mechanismController.getLeftTriggerAxis()));
+    m_Intake.setDefaultCommand(new intakeCommandDefault(m_Intake));
 
-    m_Shooter.setDefaultCommand(new shooterCommandDefault(m_Shooter, m_Handler));
+    m_Shooter.setDefaultCommand(new shooterCommandDefault(m_Shooter, 
+                                                          m_Handler,
+                                                          ()-> mechanismController.getRightBumperPressed(),
+                                                          ()-> mechanismController.getLeftBumperPressed()));
     
                         
 
@@ -109,11 +116,17 @@ public class RobotContainer {
 
     intakeTrigger.onTrue(new intakeCommand(m_Intake,
                                            m_Shooter,
-                                           ()-> (mechanismController.getRightTriggerAxis() > 0.2)));
+                                           m_Handler));
     
-    shooterTrigger.onTrue(new shooterCommand(m_Shooter, 
+    shooterTrigger.onTrue(new shooterCommandPassNote(m_Shooter, 
                                              m_Handler, 
                                              ()-> mechanismController.getLeftTriggerAxis() > 0.2));
+
+    abortTrigger.onTrue(new shooterCommandDefault(m_Shooter, 
+                                                  m_Handler,
+                                                  ()-> mechanismController.getRightBumperPressed(),
+                                                  ()-> mechanismController.getLeftBumperPressed())
+             .alongWith(new intakeCommandDefault(m_Intake)));
     
   }
 

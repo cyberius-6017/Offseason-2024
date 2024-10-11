@@ -7,14 +7,11 @@ import frc.robot.subsystems.intake;
 
 public class intakeCommandDefault extends Command{
 
-    private intake intake;    
-    private Supplier<Double> rTrigger, lTrigger;
+    private intake intake;
 
-    public intakeCommandDefault(intake intake,Supplier<Double> rTrigger, Supplier<Double> lTrigger){
+    public intakeCommandDefault(intake intake){
 
         this.intake = intake;
-        this.rTrigger = rTrigger;
-        this.lTrigger = lTrigger;
 
         addRequirements(intake);
     }

@@ -20,6 +20,8 @@ import com.ctre.phoenix6.signals.SensorDirectionValue;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import au.grapplerobotics.ConfigurationFailedException;
+import au.grapplerobotics.LaserCan;
 
 public class shooter extends SubsystemBase{
 
@@ -28,14 +30,17 @@ public class shooter extends SubsystemBase{
     private TalonFX index;
     private TalonFX pivot;
 
+    private LaserCan isNoteIn;    
 
     private CANcoder shooterPosition;
 
     private double encoderOffset;
 
-    public shooter(int shooterLeftID, int shooterRightID, int indexID, int pivotID, int encoderID, double encoderOffset){
+    public shooter(int shooterLeftID, int shooterRightID, int indexID, int pivotID, int encoderID, double encoderOffset, int sensorID){
 
         this.encoderOffset = encoderOffset;
+
+        isNoteIn = new LaserCan(sensorID);
 
         shooterPosition = new CANcoder(encoderID);
         shooterPosition.getConfigurator().apply(new MagnetSensorConfigs().withAbsoluteSensorRange(AbsoluteSensorRangeValue.Unsigned_0To1).withSensorDirection(SensorDirectionValue.Clockwise_Positive));
@@ -86,7 +91,7 @@ public class shooter extends SubsystemBase{
 
     public void setShooterVelocity(double vel){
 
-        shooterLeft.setControl(new VelocityDutyCycle(-vel));
+        shooterLeft.setControl(new VelocityDutyCycle(-vel + 5));
         shooterRight.setControl(new VelocityDutyCycle(-vel));
 
 
@@ -98,6 +103,29 @@ public class shooter extends SubsystemBase{
                                shooterRight.getVelocity().getValueAsDouble()};
 
         return velocities;
+
+    }
+
+    public boolean getNoteStatus(){
+
+        LaserCan.Measurement measurement = isNoteIn.getMeasurement();
+
+        if (measurement != null && measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT) {
+            return true;
+        } else {
+          return false;
+        }
+
+    }
+
+    public double getNoteDistance(){
+
+        LaserCan.Measurement measurement = isNoteIn.getMeasurement();
+        if (measurement != null && measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT) {
+            return(measurement.distance_mm);
+        } else {
+          return 0.0;
+        }
 
     }
 
@@ -143,6 +171,8 @@ public class shooter extends SubsystemBase{
     @Override
     public void periodic(){
 
+        SmartDashboard.putNumber("Note Dis: ", getNoteDistance());
+        SmartDashboard.putBoolean("Note: ", getNoteStatus());
         SmartDashboard.putNumber("Shooter Pos: ", getShooterAbsolutePosition());
         SmartDashboard.putNumberArray("Shooter Vel", getShooterVelocity());
         SmartDashboard.putBoolean("Limit Fwd", (pivot.getForwardLimit().getValue() == ForwardLimitValue.ClosedToGround));

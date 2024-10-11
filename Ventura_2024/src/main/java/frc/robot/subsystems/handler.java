@@ -10,14 +10,12 @@ public class handler extends SubsystemBase{
     public static boolean canShoot;
     public static boolean canAlignSpeaker;
     public static boolean canAlignDrive;
-    public static boolean canShooterIndex;
     public static boolean canClimb;
     public static Pose2d robotPos;
 
     public handler(){
 
         canIntake = true;
-        canShooterIndex = false;
         canShoot = false;
         canAlignSpeaker = false;
         canAlignDrive = false;
@@ -76,16 +74,7 @@ public class handler extends SubsystemBase{
     return canAlignDrive;
   }
   ////////////////////////////////////////////
-  public void setCanShooterIndex(boolean isOn){
-    canShooterIndex = isOn;  
-  }
-  public void toggleCanShooterIndex(){
-    canShooterIndex= !canShooterIndex;
-  }
-  public boolean getCanShooterIndex(){
-    return canShooterIndex;
-  }
-  ////////////////////////////////////////////
+ 
   public void setCanClimb(boolean isOn){
     canClimb = isOn;  
   }
@@ -105,7 +94,6 @@ public class handler extends SubsystemBase{
     @Override
     public void periodic() {
         SmartDashboard.putBoolean("Can Intake: ", canIntake);
-        SmartDashboard.putBoolean("Can Index: ", canShooterIndex);
         SmartDashboard.putBoolean("Can Shoot: ", canShoot);
         SmartDashboard.putBoolean("Can Climb:", canClimb);
     }

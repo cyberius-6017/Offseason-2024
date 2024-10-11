@@ -24,6 +24,17 @@ import frc.lib.config.SwerveModuleConstants;
  */
 public final class Constants {
 
+  public static final class Climber{
+
+    public static final int climberLeftID = 25;
+    public static final int climberRightID = 26;
+
+    public static final double climberRatio = 1000/49;
+
+    
+
+
+  }
 
   public static final class Sensors {
 
@@ -31,6 +42,7 @@ public final class Constants {
     //public static final String limeb = "limelight-back";
 
     public static final int intakeIndex = 0;
+    public static final int shooterSensor = 17;
 
   }
 
@@ -44,11 +56,11 @@ public final class Constants {
     public static final int shooterLeft = 14;
     public static final int shooterRight = 15;
 
-    public static final double shooterLKP = 1.0;
+    public static final double shooterLKP = 2.0;
     public static final double shooterLKI = 0.0;
     public static final double shooterLKD = 0.0;
 
-    public static final double shooterRKP = 1.0;
+    public static final double shooterRKP = 2.0;
     public static final double shooterRKI = 0.0;
     public static final double shooterRKD = 0.0;
 
