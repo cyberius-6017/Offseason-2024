@@ -40,10 +40,13 @@ public class climber extends SubsystemBase{
         climberR0Configs.kI = Constants.Climber.climberKI;
         climberR0Configs.kD = Constants.Climber.climberKD;
         motorRight.getConfigurator().apply(climberR0Configs); 
-        motorRight.getConfigurator().apply(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake).withInverted(InvertedValue.Clockwise_Positive));
+        motorRight.getConfigurator().apply(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake).withInverted(InvertedValue.CounterClockwise_Positive));
         motorRight.getConfigurator().apply(new CurrentLimitsConfigs().withStatorCurrentLimit(Constants.Climber.climberCurrentLImit));
         motorRight.getConfigurator().apply(new ClosedLoopRampsConfigs().withDutyCycleClosedLoopRampPeriod(Constants.Climber.closedLoopRamp));
-        motorLeft.getConfigurator().apply(new FeedbackConfigs().withSensorToMechanismRatio(Constants.Climber.climberRatio));
+        motorRight.getConfigurator().apply(new FeedbackConfigs().withSensorToMechanismRatio(Constants.Climber.climberRatio));
+    
+        setZeroPosition();
+
     }
 
 
@@ -81,6 +84,18 @@ public class climber extends SubsystemBase{
         }
     
         motorLeft.set(speed);
+    }
+
+    public void setRightMotor(double speed){
+
+        motorRight.set(-speed);
+
+    }
+
+    public void setLeftMotor(double speed){
+
+        motorLeft.set(-speed);
+
     }
    
     public void motorLeftUp(double speed){
@@ -120,6 +135,29 @@ public class climber extends SubsystemBase{
                               motorRight.getPosition().getValueAsDouble()};
 
         return positions;
+
+    }
+
+    public void setZeroPosition(){
+
+        motorLeft.setPosition(0.0);
+        motorRight.setPosition(0.0);
+        System.out.println("Climbers zeroed correctly");
+
+    }
+
+    public double[] getClimberDC(){
+
+        double[] dcs = {motorLeft.getDutyCycle().getValueAsDouble(),
+                        motorRight.getDutyCycle().getValueAsDouble()};
+
+        return dcs;
+
+    }
+    public void stopClimber(){
+
+        motorLeft.stopMotor();
+        motorRight.stopMotor();
 
     }
 

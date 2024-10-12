@@ -57,9 +57,9 @@ public final class Constants {
     public static final int encoderID = 60;
     public static final double encoderOffset = 0.0;
 
-    public static final int indexID = 12;
+    public static final int indexID = 14;
     public static final int pivotID = 13;
-    public static final int shooterLeft = 14;
+    public static final int shooterLeft = 12;
     public static final int shooterRight = 15;
 
     public static final double shooterLKP = 2.0;

@@ -65,7 +65,7 @@ public class shooterCommandPassNote extends Command {
 
             indexSpeed = 1.0;
 
-            if(Timer.getFPGATimestamp() - startTime > 0.5){
+            if(Timer.getFPGATimestamp() - startTime > 0.8){
 
                 startTime = 0.0;
                 state ++;

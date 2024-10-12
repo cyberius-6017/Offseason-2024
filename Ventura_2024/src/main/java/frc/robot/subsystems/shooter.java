@@ -91,7 +91,7 @@ public class shooter extends SubsystemBase{
 
     public void setShooterVelocity(double vel){
 
-        shooterLeft.setControl(new VelocityDutyCycle(-vel + 5));
+        shooterLeft.setControl(new VelocityDutyCycle(-vel));
         shooterRight.setControl(new VelocityDutyCycle(-vel));
 
 
