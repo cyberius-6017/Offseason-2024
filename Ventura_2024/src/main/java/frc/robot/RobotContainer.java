@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.arduinoCommunicationCommand;
+import frc.robot.commands.climberCommandDefault;
 import frc.robot.commands.drivetrainCommandAlignShuttle;
 import frc.robot.commands.drivetrainCommandAlignSpeaker;
 import frc.robot.commands.drivetrainCommandDefault;
@@ -18,7 +19,9 @@ import frc.robot.commands.intakeCommand;
 import frc.robot.commands.intakeCommandDefault;
 import frc.robot.commands.shooterCommand;
 import frc.robot.commands.shooterCommandDefault;
+import frc.robot.commands.shooterCommandLowPassNote;
 import frc.robot.commands.shooterCommandPassNote;
+import frc.robot.commands.shooterCommandShootNote;
 import frc.robot.subsystems.arduinoComm;
 import frc.robot.subsystems.climber;
 import frc.robot.subsystems.handler;
@@ -59,9 +62,13 @@ public class RobotContainer {
   private Trigger alignSpkTrigger = new Trigger(()-> driverController.getXButton());
   private Trigger alignShtTrigger = new Trigger(()-> driverController.getStartButton());
 
-  private Trigger intakeTrigger = new Trigger((()-> Math.abs(mechanismController.getRightTriggerAxis()) > 0.2))
+  private Trigger intakeTrigger = new Trigger((()-> Math.abs(mechanismController.getLeftTriggerAxis()) > 0.2))
                              .and(new Trigger(()-> handler.canIntake));
-  private Trigger shooterTrigger = new Trigger((()-> Math.abs(mechanismController.getLeftTriggerAxis()) > 0.2))
+  private Trigger shooterPassTrigger = new Trigger((()-> mechanismController.getPOV() == 0))
+                              .and(new Trigger(()-> handler.canShoot));
+  private Trigger shooterLowPassTrigger = new Trigger((()-> mechanismController.getPOV() == 180))
+                              .and(new Trigger(()-> handler.canShoot));
+  private Trigger shooterShootTrigger = new Trigger((()-> Math.abs(mechanismController.getRightTriggerAxis()) > 0.2))
                               .and(new Trigger(()-> handler.canShoot));
 
   private Trigger abortTrigger = new Trigger(()-> mechanismController.getStartButtonPressed());
@@ -97,6 +104,9 @@ public class RobotContainer {
 
     m_ArduinoComm.setDefaultCommand(new arduinoCommunicationCommand(m_ArduinoComm,
                                                                     m_Handler));
+
+    m_Climber.setDefaultCommand(new climberCommandDefault(m_Climber,
+                                                          m_Handler));
     
                         
 
@@ -128,7 +138,15 @@ public class RobotContainer {
                                            m_Shooter,
                                            m_Handler));
     
-    shooterTrigger.onTrue(new shooterCommandPassNote(m_Shooter, 
+    shooterPassTrigger.onTrue(new shooterCommandPassNote(m_Shooter, 
+                                             m_Handler, 
+                                             ()-> mechanismController.getPOV() == 0));
+
+    shooterLowPassTrigger.onTrue(new shooterCommandLowPassNote(m_Shooter, 
+                                             m_Handler, 
+                                             ()-> mechanismController.getPOV() == 180));
+
+    shooterShootTrigger.onTrue(new shooterCommandShootNote(m_Shooter, 
                                              m_Handler, 
                                              ()-> mechanismController.getLeftTriggerAxis() > 0.2));
 

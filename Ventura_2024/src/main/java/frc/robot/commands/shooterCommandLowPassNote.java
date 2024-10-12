@@ -9,20 +9,20 @@ import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.handler;
 import frc.robot.subsystems.shooter;
 
-public class shooterCommandPassNote extends Command {
+public class shooterCommandLowPassNote extends Command {
 
     private shooter shooter;
     private handler handler;
     private int state;
     private boolean finished;
     private double shooterVel, indexSpeed, shooterPos, startTime;
-    private Supplier<Boolean> dPadUp;
+    private Supplier<Boolean> dPadDown;
 
-    public shooterCommandPassNote(shooter shooter, handler handler, Supplier<Boolean> dPadUp){
+    public shooterCommandLowPassNote(shooter shooter, handler handler, Supplier<Boolean> dPadDown){
 
         this.shooter = shooter;
         this.handler = handler;
-        this.dPadUp = dPadUp;
+        this.dPadDown = dPadDown;
 
         addRequirements(shooter);
     }
@@ -50,7 +50,7 @@ public class shooterCommandPassNote extends Command {
             if((Math.abs(shooter.getShooterVelocity()[0])  >= 70 || Math.abs(shooter.getShooterVelocity()[1])  >= 70)){
             handler.setShootReady(true);
                 //Blink
-                if(!dPadUp.get()){
+                if(!dPadDown.get()){
 
                     startTime = Timer.getFPGATimestamp();
                     state ++;
