@@ -35,7 +35,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     CameraServer.startAutomaticCapture(0);
-    arduino.setupArduino();
+    // arduino.setupArduino();
   }
 
   /**
@@ -63,7 +63,7 @@ public class Robot extends TimedRobot {
     //LimelightHelpers.setLEDMode_ForceOff(Constants.Sensors.limef);
 
     //LimelightHelpers.setLEDMode_ForceBlink(Constants.Sensors.limef);
-    arduino.ledMode("idle");
+    // arduino.ledMode("idle");
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
