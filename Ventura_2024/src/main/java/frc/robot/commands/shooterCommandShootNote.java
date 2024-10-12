@@ -31,7 +31,7 @@ public class shooterCommandShootNote extends Command {
     public void initialize(){
 
         shooterVel = 20.0;
-        shooterPos = 0.46;
+        shooterPos = 0.56;
         indexSpeed = 0.0;
         startTime = 0.0;
         state = 0;

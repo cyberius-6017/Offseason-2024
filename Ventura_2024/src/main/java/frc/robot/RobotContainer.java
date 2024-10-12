@@ -39,7 +39,7 @@ public class RobotContainer {
   private final XboxController mechanismController = new XboxController(Constants.OperatorConstants.driverMechanismsPort);
 
   private final drivetrain m_Drivetrain = new drivetrain();
-  private final arduinoComm m_ArduinoComm = new arduinoComm();
+  // private final arduinoComm m_ArduinoComm = new arduinoComm();
   private final intake m_Intake = new intake(Constants.Intake.intakeID, 
                                              Constants.Intake.intakeIndexID, 
                                              Constants.Sensors.intakeIndex, 
@@ -102,8 +102,8 @@ public class RobotContainer {
                                                           ()-> mechanismController.getRightBumperPressed(),
                                                           ()-> mechanismController.getLeftBumperPressed()));
 
-    m_ArduinoComm.setDefaultCommand(new arduinoCommunicationCommand(m_ArduinoComm,
-                                                                    m_Handler));
+    // m_ArduinoComm.setDefaultCommand(new arduinoCommunicationCommand(m_ArduinoComm,
+    //                                                                 m_Handler));
 
     m_Climber.setDefaultCommand(new climberCommandDefault(m_Climber,
                                                           m_Handler));
