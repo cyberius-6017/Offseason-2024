@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
   private handler m_handler;
 
-  private arduinoComm arduino = new arduinoComm();
+  // private arduinoComm arduino = new arduinoComm();
 
   /**
    * This function is run when the robot is first started up and should be used for any

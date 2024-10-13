@@ -4,20 +4,23 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.climber;
 import frc.robot.subsystems.handler;
+import frc.robot.subsystems.shooter;
 
 public class climberCommand extends Command{
 
     private climber climber;
     private handler handler;
+    private shooter shooter;
     private boolean finished;
     private int state;
     private double startTime;
 
-    public climberCommand(climber climber, handler handler){
+    public climberCommand(climber climber, handler handler, shooter shooter){
 
         
         this.climber = climber;
         this.handler = handler;
+        this.shooter = shooter;
 
         addRequirements(climber);
 
@@ -56,11 +59,14 @@ public class climberCommand extends Command{
 
             else if(handler.getCanClimb()){
 
-                climber.setClimberAngle(0.2);
-                if(Timer.getFPGATimestamp() - startTime > 0.5 && (Math.abs(climber.getClimberDC()[0]) < 0.02 || Math.abs(climber.getClimberDC()[1]) < 0.02)){
-                    handler.setCanClimb(false);
-                    finished = true;
-                    state ++;
+                climber.setClimberAngle(0.05);
+                shooter.setShooterPosition(0.58);
+                System.out.println(Math.abs(climber.getClimberDC()[1]));
+                if(Timer.getFPGATimestamp() - startTime > 0.5 && (Math.abs(climber.getClimberDC()[0]) < 0.042 || Math.abs(climber.getClimberDC()[1]) < 0.042)){
+                    shooter.setShooterPosition(0.58);
+                    // handler.setCanClimb(false);
+                    // finished = true;
+                    // state ++;
 
                 }
 

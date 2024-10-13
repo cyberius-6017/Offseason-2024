@@ -109,7 +109,8 @@ public class RobotContainer {
     //                                                                 m_Handler));
 
     m_Climber.setDefaultCommand(new climberCommand(m_Climber,
-                                                          m_Handler));
+                                                  m_Handler,
+                                                  m_Shooter));
     
     m_Climber.setDefaultCommand(new climberCommandDefault(m_Climber,
                                                           m_Handler,
@@ -172,7 +173,8 @@ public class RobotContainer {
                                                   ()-> mechanismController.getLeftY(),
                                                   ()-> mechanismController.getRightY())));
     climbTrigger.onTrue(new climberCommand(m_Climber, 
-                                             m_Handler));
+                                             m_Handler,
+                                             m_Shooter));
 
   }
 
