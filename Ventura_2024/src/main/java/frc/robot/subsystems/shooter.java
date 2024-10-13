@@ -110,10 +110,20 @@ public class shooter extends SubsystemBase{
 
         LaserCan.Measurement measurement = isNoteIn.getMeasurement();
 
-        if (measurement != null && measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT) {
+        // if (measurement != null && measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT) {
+        //     return true;
+        // } else {
+        //   return false;
+        // }
+
+        if(getNoteDistance() < 40 && getNoteDistance() > 10){
+
             return true;
-        } else {
-          return false;
+
+        }
+        else{
+
+            return false;
         }
 
     }

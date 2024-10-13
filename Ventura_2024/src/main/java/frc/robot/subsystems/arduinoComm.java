@@ -7,8 +7,14 @@ public class arduinoComm extends SubsystemBase {
 
     private SerialPort arduino;
 
+    public arduinoComm(){
 
-    public void setupArduino() {
+      arduino = setupArduino();
+
+    }
+
+
+    public SerialPort setupArduino() {
         try {
             arduino = new SerialPort(9600, SerialPort.Port.kUSB);
             System.out.println("Connected on kUSB!");
@@ -29,6 +35,8 @@ public class arduinoComm extends SubsystemBase {
         }
       }
     }
+
+    return arduino;
   }
 
   public void ledMode(String mode) {

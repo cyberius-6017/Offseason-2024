@@ -20,9 +20,9 @@ import frc.robot.subsystems.arduinoComm;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
-  private handler m_handler;
+  //private handler m_handler;
 
-  private arduinoComm arduino = new arduinoComm();
+  //private arduinoComm arduino = new arduinoComm();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     CameraServer.startAutomaticCapture(0);
-    arduino.setupArduino();
+    //arduino.setupArduino();
   }
 
   /**
@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
     //LimelightHelpers.setLEDMode_ForceOff(Constants.Sensors.limef);
 
     //LimelightHelpers.setLEDMode_ForceBlink(Constants.Sensors.limef);
-    arduino.ledMode("idle");
+    //arduino.ledMode("idle");
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */

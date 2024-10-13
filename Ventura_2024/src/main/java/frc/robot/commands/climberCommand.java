@@ -44,7 +44,7 @@ public class climberCommand extends Command{
 
             if(!handler.getCanClimb()){
 
-                climber.setClimberAngle(2.0);
+                climber.setClimberAngle(2.2);
                 if(Timer.getFPGATimestamp() - startTime > 0.5 && (Math.abs(climber.getClimberDC()[0]) < 0.01 || Math.abs(climber.getClimberDC()[1]) < 0.01)){
 
                     handler.setCanClimb(true);
@@ -57,9 +57,10 @@ public class climberCommand extends Command{
             else if(handler.getCanClimb()){
 
                 climber.setClimberAngle(0.0);
+                System.out.println("Putting down climbers");
                 if(Timer.getFPGATimestamp() - startTime > 0.5 && (Math.abs(climber.getClimberDC()[0]) < 0.01 || Math.abs(climber.getClimberDC()[1]) < 0.01)){
-
                     handler.setCanClimb(false);
+                    System.out.println("Climb handler is now " + handler.getCanClimb());
                     state ++;
 
                 }

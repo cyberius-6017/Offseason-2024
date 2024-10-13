@@ -10,13 +10,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.arduinoCommunicationCommand;
+import frc.robot.commands.climberCommand;
+import frc.robot.commands.climberCommandDefault;
 import frc.robot.commands.drivetrainCommandAlignShuttle;
 import frc.robot.commands.drivetrainCommandAlignSpeaker;
 import frc.robot.commands.drivetrainCommandDefault;
 import frc.robot.commands.drivetrainCommandTank;
 import frc.robot.commands.intakeCommand;
+import frc.robot.commands.intakeCommandAuto;
 import frc.robot.commands.intakeCommandDefault;
 import frc.robot.commands.shooterCommand;
+import frc.robot.commands.shooterCommandAuto;
+import frc.robot.commands.shooterCommandAutoInit;
 import frc.robot.commands.shooterCommandDefault;
 import frc.robot.commands.shooterCommandPassNote;
 import frc.robot.subsystems.arduinoComm;
@@ -36,7 +41,9 @@ public class RobotContainer {
   private final XboxController mechanismController = new XboxController(Constants.OperatorConstants.driverMechanismsPort);
 
   private final drivetrain m_Drivetrain = new drivetrain();
-  private final arduinoComm m_ArduinoComm = new arduinoComm();
+
+  // private final arduinoComm m_ArduinoComm = new arduinoComm();
+
   private final intake m_Intake = new intake(Constants.Intake.intakeID, 
                                              Constants.Intake.intakeIndexID, 
                                              Constants.Sensors.intakeIndex, 
@@ -57,7 +64,7 @@ public class RobotContainer {
                             .or(new Trigger((()-> Math.abs(driverController.getLeftTriggerAxis()) > 0.2)));
 
   private Trigger alignSpkTrigger = new Trigger(()-> driverController.getXButton());
-  private Trigger alignShtTrigger = new Trigger(()-> driverController.getStartButton());
+  private Trigger alignShtTrigger = new Trigger(()-> driverController.getAButton());
 
   private Trigger intakeTrigger = new Trigger((()-> Math.abs(mechanismController.getRightTriggerAxis()) > 0.2))
                              .and(new Trigger(()-> handler.canIntake));
@@ -70,6 +77,10 @@ public class RobotContainer {
 
   public void registerCommands(){
 
+    NamedCommands.registerCommand("Shooter Auto Init", new shooterCommandAutoInit(m_Shooter));
+    NamedCommands.registerCommand("Shooter Auto", new shooterCommandAuto(m_Shooter));
+    NamedCommands.registerCommand("Intake Auto", new intakeCommandAuto(m_Intake, m_Shooter));
+
   }
   
   public RobotContainer() {
@@ -80,6 +91,7 @@ public class RobotContainer {
     autoChooser.addOption("EZ AUTO", new PathPlannerAuto("EZ AUTO"));
     autoChooser.addOption("Test", new PathPlannerAuto("Test"));
     autoChooser.addOption("EZ PATH", new PathPlannerAuto("EZ PATH"));
+    autoChooser.addOption("No se", new PathPlannerAuto("No se Auto"));
 
     m_Drivetrain.setDefaultCommand(new drivetrainCommandDefault(m_Drivetrain, 
                                   m_Handler,
@@ -97,8 +109,8 @@ public class RobotContainer {
                                                           ()-> mechanismController.getRightBumperPressed(),
                                                           ()-> mechanismController.getLeftBumperPressed()));
 
-    m_ArduinoComm.setDefaultCommand(new arduinoCommunicationCommand(m_ArduinoComm,
-                                                                    m_Handler));
+    // m_ArduinoComm.setDefaultCommand(new arduinoCommunicationCommand(m_ArduinoComm,
+    //                                                                 m_Handler));
     
     m_Climber.setDefaultCommand(new climberCommandDefault(m_Climber,
                                                           m_Handler,

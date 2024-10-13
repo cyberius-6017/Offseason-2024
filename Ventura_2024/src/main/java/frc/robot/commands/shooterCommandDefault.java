@@ -29,7 +29,8 @@ public class shooterCommandDefault  extends Command{
         
         shooter.setShooterPosition(0.46);
         shooter.setIndexer(0.0);
-        shooter.setShooterVelocity(20);
+        //shooter.setShooterVelocity(20.0);
+        shooter.stopShooter();
 
         if(rBumper.get()){
 

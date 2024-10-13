@@ -131,13 +131,13 @@ public final class Constants {
     public static final double driveGearRatio = (153.0 / 25.0); //6.12:1 
     public static final double angleGearRatio = (150.0 / 7.0); // 21.42:1
 
-    public static final double drivePPkP = 2.5;
+    public static final double drivePPkP = 3.5;
     public static final double drivePPkI = 0.0;
-    public static final double drivePPkD = 0.001;
+    public static final double drivePPkD = 0.0;
     
-    public static final double steerPPkP = 2.5;
+    public static final double steerPPkP = 3.5;
     public static final double steerPPkI = 0.0;
-    public static final double steerPPkD = 0.0001;
+    public static final double steerPPkD = 0.0;
 
     public static final double alignSpkKP = 0.1;
 

@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.arduinoComm;
-import frc.robot.subsystems.climber;
 import frc.robot.subsystems.handler;
 
 public class arduinoCommunicationCommand extends Command {
@@ -14,6 +13,8 @@ public class arduinoCommunicationCommand extends Command {
         this.arduino = arduino;
         this.handler = handler;
 
+
+        
         addRequirements(arduino);
     }
 
@@ -22,6 +23,7 @@ public class arduinoCommunicationCommand extends Command {
         if(handler.getShootReady()) {
             arduino.ledMode("shootReady");
         } else if(handler.getCanIntake()) {
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             arduino.ledMode("noNote");
         } else if(handler.getCanShoot()) {
             arduino.ledMode("noteIn");
