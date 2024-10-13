@@ -14,6 +14,7 @@ public class handler extends SubsystemBase{
     public static boolean shootReady;
     public static Pose2d robotPos;
 
+
     public handler(){
 
         canIntake = true;

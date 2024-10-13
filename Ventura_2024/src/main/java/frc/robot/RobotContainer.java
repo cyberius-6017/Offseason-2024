@@ -23,7 +23,9 @@ import frc.robot.commands.shooterCommand;
 import frc.robot.commands.shooterCommandAuto;
 import frc.robot.commands.shooterCommandAutoInit;
 import frc.robot.commands.shooterCommandDefault;
+import frc.robot.commands.shooterCommandLowPassNote;
 import frc.robot.commands.shooterCommandPassNote;
+import frc.robot.commands.shooterCommandShootNote;
 import frc.robot.subsystems.arduinoComm;
 import frc.robot.subsystems.climber;
 import frc.robot.subsystems.handler;
@@ -41,9 +43,7 @@ public class RobotContainer {
   private final XboxController mechanismController = new XboxController(Constants.OperatorConstants.driverMechanismsPort);
 
   private final drivetrain m_Drivetrain = new drivetrain();
-
   // private final arduinoComm m_ArduinoComm = new arduinoComm();
-
   private final intake m_Intake = new intake(Constants.Intake.intakeID, 
                                              Constants.Intake.intakeIndexID, 
                                              Constants.Sensors.intakeIndex, 
@@ -66,9 +66,13 @@ public class RobotContainer {
   private Trigger alignSpkTrigger = new Trigger(()-> driverController.getXButton());
   private Trigger alignShtTrigger = new Trigger(()-> driverController.getAButton());
 
-  private Trigger intakeTrigger = new Trigger((()-> Math.abs(mechanismController.getRightTriggerAxis()) > 0.2))
+  private Trigger intakeTrigger = new Trigger((()-> Math.abs(mechanismController.getLeftTriggerAxis()) > 0.2))
                              .and(new Trigger(()-> handler.canIntake));
-  private Trigger shooterTrigger = new Trigger((()-> Math.abs(mechanismController.getLeftTriggerAxis()) > 0.2))
+  private Trigger shooterPassTrigger = new Trigger((()-> mechanismController.getPOV() == 0))
+                              .and(new Trigger(()-> handler.canShoot));
+  private Trigger shooterLowPassTrigger = new Trigger((()-> mechanismController.getPOV() == 180))
+                              .and(new Trigger(()-> handler.canShoot));
+  private Trigger shooterShootTrigger = new Trigger((()-> Math.abs(mechanismController.getRightTriggerAxis()) > 0.2))
                               .and(new Trigger(()-> handler.canShoot));
 
   private Trigger abortTrigger = new Trigger(()-> mechanismController.getStartButtonPressed());
@@ -111,6 +115,10 @@ public class RobotContainer {
 
     // m_ArduinoComm.setDefaultCommand(new arduinoCommunicationCommand(m_ArduinoComm,
     //                                                                 m_Handler));
+
+    m_Climber.setDefaultCommand(new climberCommand(m_Climber,
+                                                  m_Handler,
+                                                  m_Shooter));
     
     m_Climber.setDefaultCommand(new climberCommandDefault(m_Climber,
                                                           m_Handler,
@@ -148,7 +156,15 @@ public class RobotContainer {
                                            m_Shooter,
                                            m_Handler));
     
-    shooterTrigger.onTrue(new shooterCommandPassNote(m_Shooter, 
+    shooterPassTrigger.onTrue(new shooterCommandPassNote(m_Shooter, 
+                                             m_Handler, 
+                                             ()-> mechanismController.getPOV() == 0));
+
+    shooterLowPassTrigger.onTrue(new shooterCommandLowPassNote(m_Shooter, 
+                                             m_Handler, 
+                                             ()-> mechanismController.getPOV() == 180));
+
+    shooterShootTrigger.onTrue(new shooterCommandShootNote(m_Shooter, 
                                              m_Handler, 
                                              ()-> mechanismController.getLeftTriggerAxis() > 0.2));
 
@@ -165,7 +181,8 @@ public class RobotContainer {
                                                   ()-> mechanismController.getLeftY(),
                                                   ()-> mechanismController.getRightY())));
     climbTrigger.onTrue(new climberCommand(m_Climber, 
-                                             m_Handler));
+                                             m_Handler,
+                                             m_Shooter));
 
   }
 
