@@ -10,17 +10,15 @@ public class climberCommand extends Command{
 
     private climber climber;
     private handler handler;
-    private shooter shooter;
     private boolean finished;
     private int state;
     private double startTime;
 
-    public climberCommand(climber climber, handler handler, shooter shooter){
+    public climberCommand(climber climber, handler handler){
 
         
         this.climber = climber;
         this.handler = handler;
-        this.shooter = shooter;
 
         addRequirements(climber);
 
@@ -47,8 +45,8 @@ public class climberCommand extends Command{
 
             if(!handler.getCanClimb()){
 
-                climber.setClimberAngle(2.90);
-                if(Timer.getFPGATimestamp() - startTime > 0.5 && (Math.abs(climber.getClimberDC()[0]) < 0.01 || Math.abs(climber.getClimberDC()[1]) < 0.01)){
+                climber.setClimberAngle(2.90, 0, 0.0);
+                if(Timer.getFPGATimestamp() - startTime > 0.5 && (Math.abs(climber.getClimberDC()[0]) < 0.05 || Math.abs(climber.getClimberDC()[1]) < 0.05)){
 
                     handler.setCanClimb(true);
                     state ++;
@@ -59,14 +57,13 @@ public class climberCommand extends Command{
 
             else if(handler.getCanClimb()){
 
-                climber.setClimberAngle(0.05);
-                shooter.setShooterPosition(0.58);
+                climber.setClimberAngle(0.05, 1, -0.05);
                 System.out.println(Math.abs(climber.getClimberDC()[1]));
-                if(Timer.getFPGATimestamp() - startTime > 0.5 && (Math.abs(climber.getClimberDC()[0]) < 0.042 || Math.abs(climber.getClimberDC()[1]) < 0.042)){
-                    shooter.setShooterPosition(0.58);
-                    // handler.setCanClimb(false);
-                    // finished = true;
-                    // state ++;
+                if(Timer.getFPGATimestamp() - startTime > 0.5 && (Math.abs(climber.getClimberDC()[0]) < 0.0005 || Math.abs(climber.getClimberDC()[1]) < 0.0005)){
+                    
+                    handler.setCanClimb(false);
+                    
+                    state ++;
 
                 }
 

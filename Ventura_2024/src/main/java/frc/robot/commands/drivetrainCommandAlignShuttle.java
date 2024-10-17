@@ -12,11 +12,14 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
+import frc.robot.subsystems.handler;
 import frc.robot.subsystems.drivetrain.drivetrain;
 
 public class drivetrainCommandAlignShuttle extends Command {
     
     private drivetrain driveTrain;
+    private handler handler;
+
     private Supplier<Double> stickX, stickY;
     private Supplier<Boolean> isGoing;
     private Translation2d deltaPos, robotPos;
@@ -25,10 +28,11 @@ public class drivetrainCommandAlignShuttle extends Command {
     private SlewRateLimiter translationLimit = new SlewRateLimiter(2.0);
     private SlewRateLimiter strafeLimit = new SlewRateLimiter(2.0);
 
-    public drivetrainCommandAlignShuttle(drivetrain drivetrain, Supplier<Double> stickX, Supplier<Double> stickY, Supplier<Boolean> isGoing){
+    public drivetrainCommandAlignShuttle(drivetrain drivetrain, handler handler, Supplier<Double> stickX, Supplier<Double> stickY, Supplier<Boolean> isGoing){
         this.driveTrain = drivetrain;
         this.stickX = stickX;
         this.stickY = stickY;
+        this.handler = handler;
         this.isGoing = isGoing;
 
         addRequirements(drivetrain);
@@ -70,6 +74,14 @@ public class drivetrainCommandAlignShuttle extends Command {
 
         driveTrain.alignRobotSpeaker(translationVal, strafeVal, error * Constants.Swerve.alignSpkKP);
     }
+
+    @Override
+    public void end(boolean interrupted){
+    
+        LimelightHelpers.setLEDMode_ForceOff(Constants.Sensors.limef);
+        
+    }
+
 
     @Override
     public boolean isFinished(){

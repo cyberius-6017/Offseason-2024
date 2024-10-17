@@ -34,6 +34,7 @@ public class drivetrain extends SubsystemBase{
     private Field2d field;
     private SwerveDriveOdometry swerveOdometry;
     private SwerveDrivePoseEstimator swervePoseEstimator;
+
     
 
     public drivetrain(){
@@ -230,13 +231,13 @@ public class drivetrain extends SubsystemBase{
       
             if(mt1.tagCount == 1 && mt1.rawFiducials.length == 1){
 
-                if(mt1.rawFiducials[0].ambiguity > .8){
+                if(mt1.rawFiducials[0].ambiguity > 0.8){
 
                     rejectUpdate = true;
   
                 }
   
-                if(mt1.rawFiducials[0].distToCamera > 2.5) {
+                if(mt1.rawFiducials[0].distToCamera > 2.0) {
   
                     rejectUpdate = true;
   
@@ -252,7 +253,7 @@ public class drivetrain extends SubsystemBase{
 
             if(!rejectUpdate){
   
-                swervePoseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.02,.02,0.005));
+                swervePoseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.05,.05,0.01));
                 swervePoseEstimator.addVisionMeasurement(mt1.pose,
                                                          mt1.timestampSeconds);
             }

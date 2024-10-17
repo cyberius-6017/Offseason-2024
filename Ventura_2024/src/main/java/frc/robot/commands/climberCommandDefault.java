@@ -29,6 +29,13 @@ public class climberCommandDefault extends Command{
     }
 
     @Override
+    public void initialize(){
+
+        //handler.setCanClimb(false);
+
+    }
+
+    @Override
     public void execute(){
 
         if(xButton.get()){

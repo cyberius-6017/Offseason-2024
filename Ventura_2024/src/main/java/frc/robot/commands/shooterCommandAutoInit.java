@@ -7,26 +7,30 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.handler;
+import frc.robot.subsystems.intake;
 import frc.robot.subsystems.shooter;
 
 public class shooterCommandAutoInit extends Command {
 
     private shooter shooter;
+    private intake intake;
     private int state;
     private boolean finished;
-    private double shooterVel, indexSpeed, shooterPos, startTime;
+    private double shooterVel, indexSpeed, shooterPos, startTime, intakeVel;
 
-    public shooterCommandAutoInit(shooter shooter){
+    public shooterCommandAutoInit(shooter shooter, intake intake){
 
         this.shooter = shooter;
+        this.intake = intake;
 
-        addRequirements(shooter);
+        addRequirements(shooter, intake);
     }
 
     @Override
     public void initialize(){
 
         shooterVel = 20.0;
+        intakeVel = 100;
         shooterPos = 0.46;
         indexSpeed = 0.0;
         startTime = 0.0;
@@ -41,6 +45,7 @@ public class shooterCommandAutoInit extends Command {
         if(state == 0){
 
             shooterVel = 100;
+            intakeVel = 100;
             shooterPos = 0.57;
 
             if((Math.abs(shooter.getShooterVelocity()[0])  >= 40 || Math.abs(shooter.getShooterVelocity()[1])  >= 40)){
@@ -60,7 +65,7 @@ public class shooterCommandAutoInit extends Command {
 
             indexSpeed = 1.0;
 
-            if(Timer.getFPGATimestamp() - startTime > 0.8){
+            if(Timer.getFPGATimestamp() - startTime > 0.5){
 
                 startTime = 0.0;
                 state ++;
@@ -83,6 +88,7 @@ public class shooterCommandAutoInit extends Command {
         shooter.setShooterVelocity(shooterVel);
         shooter.setIndexer(indexSpeed);
         shooter.setShooterPosition(shooterPos);
+        intake.roll(intakeVel);
 
     }
 

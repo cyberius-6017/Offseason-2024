@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.arduinoCommunicationCommand;
 import frc.robot.commands.climberCommand;
 import frc.robot.commands.climberCommandDefault;
+import frc.robot.commands.drivetrainCommandAlignClimb;
 import frc.robot.commands.drivetrainCommandAlignShuttle;
 import frc.robot.commands.drivetrainCommandAlignSpeaker;
 import frc.robot.commands.drivetrainCommandDefault;
@@ -72,16 +73,18 @@ public class RobotContainer {
                               .and(new Trigger(()-> handler.canShoot));
   private Trigger shooterLowPassTrigger = new Trigger((()-> mechanismController.getPOV() == 180))
                               .and(new Trigger(()-> handler.canShoot));
-  private Trigger shooterShootTrigger = new Trigger((()-> Math.abs(mechanismController.getRightTriggerAxis()) > 0.2))
-                              .and(new Trigger(()-> handler.canShoot));
+  // private Trigger shooterShootTrigger = new Trigger((()-> Math.abs(mechanismController.getRightTriggerAxis()) > 0.2))
+  //                             .and(new Trigger(()-> handler.canShoot));
 
   private Trigger abortTrigger = new Trigger(()-> mechanismController.getStartButtonPressed());
 
   private Trigger climbTrigger = new Trigger(()-> mechanismController.getRightStickButtonPressed() && mechanismController.getLeftStickButtonPressed());
 
+  private Trigger alignClimbTrigger = new Trigger(()-> driverController.getPOV() == 0);
+
   public void registerCommands(){
 
-    NamedCommands.registerCommand("Shooter Auto Init", new shooterCommandAutoInit(m_Shooter));
+    NamedCommands.registerCommand("Shooter Auto Init", new shooterCommandAutoInit(m_Shooter, m_Intake));
     NamedCommands.registerCommand("Shooter Auto", new shooterCommandAuto(m_Shooter));
     NamedCommands.registerCommand("Intake Auto", new intakeCommandAuto(m_Intake, m_Shooter));
 
@@ -96,6 +99,7 @@ public class RobotContainer {
     autoChooser.addOption("Test", new PathPlannerAuto("Test"));
     autoChooser.addOption("EZ PATH", new PathPlannerAuto("EZ PATH"));
     autoChooser.addOption("No se", new PathPlannerAuto("No se Auto"));
+    autoChooser.addOption("New EZ", new PathPlannerAuto("New EZ"));
 
     m_Drivetrain.setDefaultCommand(new drivetrainCommandDefault(m_Drivetrain, 
                                   m_Handler,
@@ -110,15 +114,16 @@ public class RobotContainer {
 
     m_Shooter.setDefaultCommand(new shooterCommandDefault(m_Shooter, 
                                                           m_Handler,
+                                                          ()-> mechanismController.getAButton(),
+                                                          ()-> mechanismController.getBButton(),
                                                           ()-> mechanismController.getRightBumperPressed(),
-                                                          ()-> mechanismController.getLeftBumperPressed()));
-
+                                                          ()-> mechanismController.getLeftBumperPressed(),
+                                                          ()-> mechanismController.getRightTriggerAxis()));
     // m_ArduinoComm.setDefaultCommand(new arduinoCommunicationCommand(m_ArduinoComm,
     //                                                                 m_Handler));
 
     m_Climber.setDefaultCommand(new climberCommand(m_Climber,
-                                                  m_Handler,
-                                                  m_Shooter));
+                                                  m_Handler));
     
     m_Climber.setDefaultCommand(new climberCommandDefault(m_Climber,
                                                           m_Handler,
@@ -148,9 +153,15 @@ public class RobotContainer {
                                                              ()-> driverController.getXButton()));
 
     alignShtTrigger.onTrue(new drivetrainCommandAlignShuttle(m_Drivetrain,
+                                                             m_Handler,
                                                              ()-> -driverController.getLeftY(),
                                                              ()-> -driverController.getLeftX(), 
-                                                             ()-> driverController.getStartButton()));
+                                                             ()-> driverController.getAButton()));
+
+    alignClimbTrigger.onTrue(new drivetrainCommandAlignClimb(m_Drivetrain,
+                                                             ()-> -driverController.getLeftY(),
+                                                             ()-> -driverController.getLeftX(), 
+                                                             ()-> driverController.getPOV() == 0));
 
     intakeTrigger.onTrue(new intakeCommand(m_Intake,
                                            m_Shooter,
@@ -164,14 +175,17 @@ public class RobotContainer {
                                              m_Handler, 
                                              ()-> mechanismController.getPOV() == 180));
 
-    shooterShootTrigger.onTrue(new shooterCommandShootNote(m_Shooter, 
-                                             m_Handler, 
-                                             ()-> mechanismController.getLeftTriggerAxis() > 0.2));
+    // shooterShootTrigger.onTrue(new shooterCommandShootNote(m_Shooter, 
+    //                                          m_Handler, 
+    //                                          ()-> mechanismController.getRightTriggerAxis() > 0.2));
 
     abortTrigger.onTrue(new shooterCommandDefault(m_Shooter, 
                                                   m_Handler,
+                                                  ()-> mechanismController.getAButton(),
+                                                  ()-> mechanismController.getBButton(),
                                                   ()-> mechanismController.getRightBumperPressed(),
-                                                  ()-> mechanismController.getLeftBumperPressed())
+                                                  ()-> mechanismController.getLeftBumperPressed(),
+                                                  ()-> mechanismController.getRightTriggerAxis())
              .alongWith(new intakeCommandDefault(m_Intake,
                                                  ()-> mechanismController.getBButton()))
              .alongWith(new climberCommandDefault(m_Climber,
@@ -181,8 +195,7 @@ public class RobotContainer {
                                                   ()-> mechanismController.getLeftY(),
                                                   ()-> mechanismController.getRightY())));
     climbTrigger.onTrue(new climberCommand(m_Climber, 
-                                             m_Handler,
-                                             m_Shooter));
+                                             m_Handler));
 
   }
 

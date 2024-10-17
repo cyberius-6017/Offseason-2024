@@ -27,7 +27,7 @@ public class drivetrainCommandTank extends Command {
     @Override
     public void execute(){
 
-        drivetrain.drive(new Translation2d(rTrigger.get() - lTrigger.get() , 0.0), 0.0, false, true);
+        drivetrain.drive(new Translation2d((rTrigger.get() - lTrigger.get()) * 2.0, 0.0), 0.0, false, true);
 
     }
 

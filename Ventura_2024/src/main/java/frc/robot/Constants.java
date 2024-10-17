@@ -31,9 +31,14 @@ public final class Constants {
 
     public static final double climberRatio = 1000/49;
 
-    public static final double climberKP = 2.5;
-    public static final double climberKI = 0.0;
-    public static final double climberKD = 0.0;
+    public static final double climberKPUp = 0.5;
+    public static final double climberKIUp = 0.0;
+    public static final double climberKDUp = 0.0;
+
+    public static final double climberKPDo = 0.1;
+    public static final double climberKIDo = 0.0;
+    public static final double climberKDDo = 0.0;
+    
 
     public static final double climberCurrentLImit = 80;
 
@@ -98,7 +103,7 @@ public final class Constants {
     public static final double intakeKI = 0.0;
     public static final double intakeKD = 0.00001;
 
-    public static final double indexKP = 3.5;
+    public static final double indexKP = 4.0;
     public static final double indexKI = 0.0;
     public static final double indexKD = 0.00001;
 
@@ -131,18 +136,18 @@ public final class Constants {
     public static final double driveGearRatio = (153.0 / 25.0); //6.12:1 
     public static final double angleGearRatio = (150.0 / 7.0); // 21.42:1
 
-    public static final double drivePPkP = 3.5;
+    public static final double drivePPkP = 5.5;
     public static final double drivePPkI = 0.0;
     public static final double drivePPkD = 0.0;
     
-    public static final double steerPPkP = 3.5;
+    public static final double steerPPkP = 5.5;
     public static final double steerPPkI = 0.0;
     public static final double steerPPkD = 0.0;
 
-    public static final double alignSpkKP = 0.1;
+    public static final double alignSpkKP = 0.2;
 
     /* Swerve Profiling Values */
-    public static final double maxSpeed = 6.5; // meters per second
+    public static final double maxSpeed = 7.0; // meters per second
     public static final double maxAngularVelocity = 12.5;
 
     public static final HolonomicPathFollowerConfig holoConfig =
@@ -253,8 +258,8 @@ public final class Constants {
   }
 
   public static final class Field {
-    public static final Translation2d speakRed = new Translation2d(16.40, 5.54);
-    public static final Translation2d speakBlue = new Translation2d(0.14, 5.54);
+    public static final Translation2d speakRed = new Translation2d(16.40, 5.2);
+    public static final Translation2d speakBlue = new Translation2d(0.2, 5.2);
 
     public static final Translation2d shuttleRed = new Translation2d(15.64, 7.25);
     public static final Translation2d shuttleBlue = new Translation2d(0.9, 7.25);

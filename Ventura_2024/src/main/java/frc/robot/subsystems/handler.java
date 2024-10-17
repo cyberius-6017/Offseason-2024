@@ -104,6 +104,12 @@ public class handler extends SubsystemBase{
   
   }
 
+  public double setRegression(double inter, double alpha, double beta,  double x1, double x2) {
+
+    return inter + alpha * x1 + beta * x2;
+  
+  }
+
   @Override
   public void periodic() {
       SmartDashboard.putBoolean("Can Intake: ", canIntake);

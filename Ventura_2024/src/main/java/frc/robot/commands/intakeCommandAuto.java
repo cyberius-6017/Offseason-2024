@@ -40,7 +40,7 @@ public class intakeCommandAuto extends Command {
 
             shooterPos = 0.51;
             rollerVel =  120.0;
-            indexSpeed = 0.25;
+            indexSpeed = 0.3;
 
             if(shooter.getNoteStatus()){
 

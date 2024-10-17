@@ -43,7 +43,7 @@ public class shooterCommandAuto extends Command {
             shooterVel = 100;
             shooterPos = 0.56;
 
-            if((Math.abs(shooter.getShooterVelocity()[0])  >= 40 || Math.abs(shooter.getShooterVelocity()[1])  >= 40)){
+            if((Math.abs(shooter.getShooterVelocity()[0])  >= 60 || Math.abs(shooter.getShooterVelocity()[1])  >= 60)){
             //handler.setShootReady(true);
                 //Blink
                 
@@ -60,7 +60,7 @@ public class shooterCommandAuto extends Command {
 
             indexSpeed = 1.0;
 
-            if(Timer.getFPGATimestamp() - startTime > 0.8){
+            if(Timer.getFPGATimestamp() - startTime > 0.5){
 
                 startTime = 0.0;
                 state ++;
@@ -72,7 +72,7 @@ public class shooterCommandAuto extends Command {
 
         else if(state == 2){
 
-            shooterVel = 20.0;
+            shooterVel = 40.0;
             indexSpeed = 0.0;
             shooterPos = 0.51;
             state = 0;

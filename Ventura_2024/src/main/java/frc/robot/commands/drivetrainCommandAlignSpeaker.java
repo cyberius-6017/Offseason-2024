@@ -58,16 +58,31 @@ public class drivetrainCommandAlignSpeaker extends Command {
         
         double setPoint = deltaPos.getAngle().getDegrees();
         double error = setPoint - currentRot.getDegrees();
+        
+        //double power = error;
+
+        if(error < -300){
+
+            System.out.println("Aqui -300");
+            error += 360.0;
+
+        }
+        else if(error > 300){
+
+            System.out.println("Aqui 300");
+            error -= 360.0;
+
+        }
 
 
-        if(Math.abs(error) < 0.3) {
+        if(Math.abs(error) < 1.0) {
 
             error = 0.0;
             LimelightHelpers.setLEDMode_ForceBlink(Constants.Sensors.limef);
 
         }
         // System.out.print("Setpoint: " + setPoint + " ");
-        // System.out.println("Error: " + error);
+        System.out.println("Error: " + error);
         double translationVal = translationLimit.calculate(MathUtil.applyDeadband(stickX.get(), 
                                                                                   Constants.Swerve.stickDeadband));
         double strafeVal = strafeLimit.calculate(MathUtil.applyDeadband(stickY.get(), 

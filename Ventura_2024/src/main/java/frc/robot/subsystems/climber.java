@@ -5,6 +5,7 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.Slot1Configs;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -26,9 +27,13 @@ public class climber extends SubsystemBase{
         motorLeft = new TalonFX(climberLeftID);
 
         var climberL0Configs = new Slot0Configs();
-        climberL0Configs.kP = Constants.Climber.climberKP;
-        climberL0Configs.kI = Constants.Climber.climberKI;
-        climberL0Configs.kD = Constants.Climber.climberKD;
+        climberL0Configs.kP = Constants.Climber.climberKPUp;
+        climberL0Configs.kI = Constants.Climber.climberKIUp;
+        climberL0Configs.kD = Constants.Climber.climberKDUp;
+        var climberL1Configs = new Slot1Configs();
+        climberL1Configs.kP = Constants.Climber.climberKPDo;
+        climberL1Configs.kI = Constants.Climber.climberKIDo;
+        climberL1Configs.kD = Constants.Climber.climberKDDo;
         motorLeft.getConfigurator().apply(climberL0Configs); 
         motorLeft.getConfigurator().apply(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake).withInverted(InvertedValue.Clockwise_Positive));
         motorLeft.getConfigurator().apply(new CurrentLimitsConfigs().withStatorCurrentLimit(Constants.Climber.climberCurrentLImit));
@@ -36,9 +41,14 @@ public class climber extends SubsystemBase{
         motorLeft.getConfigurator().apply(new FeedbackConfigs().withSensorToMechanismRatio(Constants.Climber.climberRatio));
 
         var climberR0Configs = new Slot0Configs();
-        climberR0Configs.kP = Constants.Climber.climberKP;
-        climberR0Configs.kI = Constants.Climber.climberKI;
-        climberR0Configs.kD = Constants.Climber.climberKD;
+        climberR0Configs.kP = Constants.Climber.climberKPUp;
+        climberR0Configs.kI = Constants.Climber.climberKIUp;
+        climberR0Configs.kD = Constants.Climber.climberKDUp;
+        var climberR1Configs = new Slot1Configs();
+        climberR1Configs.kP = Constants.Climber.climberKPDo;
+        climberR1Configs.kI = Constants.Climber.climberKIDo;
+        climberR1Configs.kD = Constants.Climber.climberKDDo;
+        motorLeft.getConfigurator().apply(climberL0Configs); 
         motorRight.getConfigurator().apply(climberR0Configs); 
         motorRight.getConfigurator().apply(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake).withInverted(InvertedValue.CounterClockwise_Positive));
         motorRight.getConfigurator().apply(new CurrentLimitsConfigs().withStatorCurrentLimit(Constants.Climber.climberCurrentLImit));
@@ -110,10 +120,10 @@ public class climber extends SubsystemBase{
     }
         
 
-    public void setClimberAngle(double angle){
+    public void setClimberAngle(double angle, int slot, double feedforward){
 
-        motorRight.setControl(new PositionDutyCycle(angle));
-        motorLeft.setControl(new PositionDutyCycle(angle));
+        motorRight.setControl(new PositionDutyCycle(angle).withSlot(slot).withFeedForward(feedforward));
+        motorLeft.setControl(new PositionDutyCycle(angle).withSlot(slot).withFeedForward(feedforward));
 
     }
 

@@ -44,12 +44,12 @@ public class shooterCommandShootNote extends Command {
 
         if(state == 0){
 
-            shooterVel = 100;
+            shooterVel = 65;
             //de .46 a .58
-            shooterPos = 0.49;
+            shooterPos = 0.53;
 
-            if((Math.abs(shooter.getShooterVelocity()[0])  >= 70 || Math.abs(shooter.getShooterVelocity()[1])  >= 70)){
-            handler.setShootReady(true);
+            if((Math.abs(shooter.getShooterVelocity()[0])  >= 60 || Math.abs(shooter.getShooterVelocity()[1])  >= 60)){
+                handler.setShootReady(true);
                 //Blink
                 if(!rTrigger.get()){
 

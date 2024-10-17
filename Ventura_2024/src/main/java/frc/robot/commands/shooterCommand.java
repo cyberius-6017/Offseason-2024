@@ -29,7 +29,7 @@ public class shooterCommand extends Command {
         double xPos = handler.getRobotPose().getX();
         double shooterPos = 0.0;
 
-        shooterPos =handler.mapd(xPos, 1.30, 2.40, 0.58, 0.46);
+        shooterPos = handler.mapd(xPos, 1.30, 2.40, 0.58, 0.46);
 
         shooter.setShooterPosition(shooterPos);
 
