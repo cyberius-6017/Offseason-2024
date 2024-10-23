@@ -58,12 +58,26 @@ public class drivetrainCommandAlignShuttle extends Command {
         double error = setPoint - currentRot.getDegrees();
 
 
-        if(Math.abs(error) < 0.3) {
+        if(Math.abs(error) < 1.0) {
 
             error = 0.0;
             LimelightHelpers.setLEDMode_ForceBlink(Constants.Sensors.limef);
 
         }
+
+        if(error < -300){
+
+            System.out.println("Aqui -300");
+            error += 360.0;
+
+        }
+        else if(error > 300){
+
+            System.out.println("Aqui 300");
+            error -= 360.0;
+
+        }
+
         // System.out.print("Setpoint: " + setPoint + " ");
         // System.out.println("Error: " + error);
 

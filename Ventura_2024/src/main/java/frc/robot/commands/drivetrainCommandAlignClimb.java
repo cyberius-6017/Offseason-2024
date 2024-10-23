@@ -47,7 +47,7 @@ public class drivetrainCommandAlignClimb extends Command{
 
                 if(robotPose.getX() < 11.7){
 
-                    desPos = Rotation2d.fromDegrees(180);
+                    desPos = Rotation2d.fromDegrees(0);
 
                 }
 
@@ -55,12 +55,12 @@ public class drivetrainCommandAlignClimb extends Command{
 
                     if(robotPose.getY() > 4.6){
 
-                        desPos = Rotation2d.fromDegrees(45);
+                        desPos = Rotation2d.fromDegrees(235);
 
                     }
                     else {
 
-                        desPos = Rotation2d.fromDegrees(325);
+                        desPos = Rotation2d.fromDegrees(135);
 
                     }
 
@@ -93,8 +93,21 @@ public class drivetrainCommandAlignClimb extends Command{
 
             double error = desPos.getDegrees() - currentRot.getDegrees();
 
+            if(error < -300){
 
-            if(Math.abs(error) < 0.3) {
+                System.out.println("Aqui -300");
+                error += 360.0;
+    
+            }
+            else if(error > 300){
+    
+                System.out.println("Aqui 300");
+                error -= 360.0;
+    
+            }
+
+
+            if(Math.abs(error) < 1.0) {
 
                 error = 0.0;
                 LimelightHelpers.setLEDMode_ForceBlink(Constants.Sensors.limef);

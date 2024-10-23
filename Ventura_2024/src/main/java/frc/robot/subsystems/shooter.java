@@ -116,7 +116,7 @@ public class shooter extends SubsystemBase{
         //   return false;
         // }
 
-        if(getNoteDistance() < 40 && getNoteDistance() > 10){
+        if(getNoteDistance() < 60 && getNoteDistance() > 10){
 
             return true;
 

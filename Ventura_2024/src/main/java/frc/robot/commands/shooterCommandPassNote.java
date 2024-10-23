@@ -44,10 +44,10 @@ public class shooterCommandPassNote extends Command {
 
         if(state == 0){
 
-            shooterVel = 100;
-            shooterPos = 0.46;
+            shooterVel = 70;
+            shooterPos = 0.58;
 
-            if((Math.abs(shooter.getShooterVelocity()[0])  >= 70 || Math.abs(shooter.getShooterVelocity()[1])  >= 70)){
+            if((Math.abs(shooter.getShooterVelocity()[0])  >= 50 || Math.abs(shooter.getShooterVelocity()[1])  >= 40)){
             handler.setShootReady(true);
                 //Blink
                 if(!dPadUp.get()){

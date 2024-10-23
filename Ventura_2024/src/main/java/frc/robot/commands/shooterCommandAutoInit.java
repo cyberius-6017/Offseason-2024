@@ -46,9 +46,9 @@ public class shooterCommandAutoInit extends Command {
 
             shooterVel = 100;
             intakeVel = 100;
-            shooterPos = 0.57;
+            shooterPos = 0.56;
 
-            if((Math.abs(shooter.getShooterVelocity()[0])  >= 40 || Math.abs(shooter.getShooterVelocity()[1])  >= 40)){
+            if((Math.abs(shooter.getShooterVelocity()[0])  >= 70 || Math.abs(shooter.getShooterVelocity()[1])  >= 70)){
             //handler.setShootReady(true);
                 //Blink
                 
@@ -77,7 +77,7 @@ public class shooterCommandAutoInit extends Command {
 
         else if(state == 2){
 
-            shooterVel = 20.0;
+            shooterVel = 5;
             indexSpeed = 0.0;
             shooterPos = 0.51;
             state = 0;

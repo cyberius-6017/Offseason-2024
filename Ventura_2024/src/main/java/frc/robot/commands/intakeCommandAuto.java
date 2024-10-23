@@ -1,6 +1,8 @@
 package frc.robot.commands;
 
 import java.util.function.Supplier;
+
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.handler;
 import frc.robot.subsystems.intake;
@@ -12,7 +14,7 @@ public class intakeCommandAuto extends Command {
     private shooter shooter;
     private int state;
     private boolean  finished;
-    private double rollerVel, indexSpeed, shooterPos;
+    private double rollerVel, indexSpeed, shooterPos, startTime;
 
 
     public intakeCommandAuto(intake intake, shooter shooter) {
@@ -25,24 +27,32 @@ public class intakeCommandAuto extends Command {
     public void initialize(){
 
         rollerVel = 0.0;
+        startTime = 0.0;
         indexSpeed = 0.0;
         shooterPos = 0.46;
         intake.stopRoller();
-        state = 0;
+        state = -1;
         finished = false;
 
     }
 
     @Override
     public void execute() {
+        if(state == -1){
+
+            startTime = Timer.getFPGATimestamp();
+            state++;
+
+        }
         
-        if(state == 0){
+        else if(state == 0){
 
             shooterPos = 0.51;
             rollerVel =  120.0;
-            indexSpeed = 0.3;
+            indexSpeed = 0.25;
+    
 
-            if(shooter.getNoteStatus()){
+            if(shooter.getNoteStatus() || Timer.getFPGATimestamp() - startTime > 5  ){
 
                 state ++;
 
@@ -53,8 +63,9 @@ public class intakeCommandAuto extends Command {
         else if(state == 1){
 
             shooterPos = 0.46;
+            startTime = 0.0;
             indexSpeed = 0.0;
-            state = 0;
+            state = -1;
 
             
             finished = true;
@@ -70,8 +81,9 @@ public class intakeCommandAuto extends Command {
 
     @Override
     public void end(boolean interrupted){
-    
-        state = 0;
+
+        startTime = 0.0;
+        state = -1;
     }
 
     @Override

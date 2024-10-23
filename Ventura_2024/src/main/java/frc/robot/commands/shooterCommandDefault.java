@@ -89,7 +89,7 @@ public class shooterCommandDefault  extends Command{
         
                 if (ally.isPresent()) {
                     if (ally.get() == Alliance.Red) {
-                        xPos = 17.90 - handler.getRobotPose().getX();
+                        xPos = 16.8 - handler.getRobotPose().getX();
                         yPos = handler.getRobotPose().getY();                   
                     }
 

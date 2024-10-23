@@ -40,10 +40,11 @@ public class shooterCommandAuto extends Command {
 
         if(state == 0){
 
+            indexSpeed = 0.0;
             shooterVel = 100;
-            shooterPos = 0.56;
+            shooterPos = 0.53;
 
-            if((Math.abs(shooter.getShooterVelocity()[0])  >= 60 || Math.abs(shooter.getShooterVelocity()[1])  >= 60)){
+            if((Math.abs(shooter.getShooterVelocity()[0])  >= 50 || Math.abs(shooter.getShooterVelocity()[1])  >= 50)){
             //handler.setShootReady(true);
                 //Blink
                 
@@ -72,9 +73,10 @@ public class shooterCommandAuto extends Command {
 
         else if(state == 2){
 
-            shooterVel = 40.0;
+            shooterVel = 15.0;
             indexSpeed = 0.0;
-            shooterPos = 0.51;
+            //TODO ctrl+z
+            shooterPos = 0.46;
             state = 0;
             finished = true;
 

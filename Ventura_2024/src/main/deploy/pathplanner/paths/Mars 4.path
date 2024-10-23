@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.275788739918288,
-        "y": 5.5
+        "x": 2.36177189843169,
+        "y": 2.751770884707689
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.2701302527532319,
-        "y": 5.4894182351391265
+        "x": 3.1409101334607787,
+        "y": 1.639517116409411
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.232926438947049,
-        "y": 5.5
+        "x": 8.12300458681635,
+        "y": 0.7822760040138917
       },
       "prevControl": {
-        "x": 2.214519944734957,
-        "y": 5.490796752893954
+        "x": 3.7698687056566964,
+        "y": 0.7454630155897096
       },
       "nextControl": null,
       "isLocked": false,
@@ -38,12 +38,12 @@
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
-    "velocity": 0.0,
+    "velocity": 0,
     "rotation": 0,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
-  "folder": "No se",
+  "folder": "Mars",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

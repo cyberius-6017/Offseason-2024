@@ -96,10 +96,15 @@ public class RobotContainer {
 
     autoChooser = AutoBuilder.buildAutoChooser("EZ AUTO");
     autoChooser.addOption("EZ AUTO", new PathPlannerAuto("EZ AUTO"));
+    autoChooser.addOption("Amp Auto", new PathPlannerAuto("Amp Auto"));
     autoChooser.addOption("Test", new PathPlannerAuto("Test"));
     autoChooser.addOption("EZ PATH", new PathPlannerAuto("EZ PATH"));
+    autoChooser.addOption("EZ reg", new PathPlannerAuto("EZ Regular"));
     autoChooser.addOption("No se", new PathPlannerAuto("No se Auto"));
     autoChooser.addOption("New EZ", new PathPlannerAuto("New EZ"));
+    autoChooser.addOption("Icarus", new PathPlannerAuto("Icarus"));
+    autoChooser.addOption("Icarus Far", new PathPlannerAuto("IcarusFar"));
+    autoChooser.addOption("Mini Mars", new PathPlannerAuto("Mini Mars"));
 
     m_Drivetrain.setDefaultCommand(new drivetrainCommandDefault(m_Drivetrain, 
                                   m_Handler,

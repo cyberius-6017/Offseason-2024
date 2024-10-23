@@ -79,7 +79,7 @@ public final class Constants {
     public static final double indexKI = 0.0;
     public static final double indexKD = 0.0;
 
-    public static final double pivotKP = 3.0;
+    public static final double pivotKP = 3.2;
     public static final double pivotKI = 0.0;
     public static final double pivotKD = 0.0;
 
@@ -258,8 +258,8 @@ public final class Constants {
   }
 
   public static final class Field {
-    public static final Translation2d speakRed = new Translation2d(16.40, 5.2);
-    public static final Translation2d speakBlue = new Translation2d(0.2, 5.2);
+    public static final Translation2d speakRed = new Translation2d(16.40, 5.7);
+    public static final Translation2d speakBlue = new Translation2d(0.2, 5.7);
 
     public static final Translation2d shuttleRed = new Translation2d(15.64, 7.25);
     public static final Translation2d shuttleBlue = new Translation2d(0.9, 7.25);

@@ -45,9 +45,9 @@ public class shooterCommandLowPassNote extends Command {
         if(state == 0){
 
             shooterVel = 100;
-            shooterPos = 0.51;
+            shooterPos = 0.46;
 
-            if((Math.abs(shooter.getShooterVelocity()[0])  >= 70 || Math.abs(shooter.getShooterVelocity()[1])  >= 70)){
+            if((Math.abs(shooter.getShooterVelocity()[0])  >= 60 || Math.abs(shooter.getShooterVelocity()[1])  >= 60)){
             handler.setShootReady(true);
                 //Blink
                 if(!dPadDown.get()){

@@ -1,0 +1,56 @@
+{
+  "version": 1.0,
+  "startingPose": null,
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "Shooter Auto Init"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Icaro3far"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake Auto"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Icaro4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Icaro5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shooter Auto"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

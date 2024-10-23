@@ -237,7 +237,7 @@ public class drivetrain extends SubsystemBase{
   
                 }
   
-                if(mt1.rawFiducials[0].distToCamera > 2.0) {
+                if(mt1.rawFiducials[0].distToCamera > 1.5) {
   
                     rejectUpdate = true;
   

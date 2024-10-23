@@ -57,7 +57,7 @@ public class climberCommand extends Command{
 
             else if(handler.getCanClimb()){
 
-                climber.setClimberAngle(0.05, 1, -0.05);
+                climber.setClimberAngle(0.05, 1, -0.08);
                 System.out.println(Math.abs(climber.getClimberDC()[1]));
                 if(Timer.getFPGATimestamp() - startTime > 0.5 && (Math.abs(climber.getClimberDC()[0]) < 0.0005 || Math.abs(climber.getClimberDC()[1]) < 0.0005)){
                     

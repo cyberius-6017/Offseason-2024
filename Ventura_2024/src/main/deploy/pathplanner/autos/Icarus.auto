@@ -1,0 +1,121 @@
+{
+  "version": 1.0,
+  "startingPose": null,
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Icaro1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shooter Auto Init"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Icaro2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake Auto"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Icaro2.5"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shooter Auto"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Icaro3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake Auto"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Icaro4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Icaro5"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shooter Auto"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

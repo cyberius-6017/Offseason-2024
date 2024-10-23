@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.275788739918288,
-        "y": 5.5
+        "x": 7.957346138907526,
+        "y": 7.491443144321266
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.2701302527532319,
-        "y": 5.4894182351391265
+        "x": 4.066066220577518,
+        "y": 7.635465427849543
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.232926438947049,
-        "y": 5.5
+        "x": 2.613922488900611,
+        "y": 6.253586715447326
       },
       "prevControl": {
-        "x": 2.214519944734957,
-        "y": 5.490796752893954
+        "x": 4.25343960531002,
+        "y": 7.06163443710625
       },
       "nextControl": null,
       "isLocked": false,
@@ -38,12 +38,12 @@
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 0,
-    "rotateFast": false
+    "velocity": 0,
+    "rotation": 27.255328374942906,
+    "rotateFast": true
   },
   "reversed": false,
-  "folder": "No se",
+  "folder": "Icarus",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0
