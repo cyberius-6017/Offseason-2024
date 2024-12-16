@@ -112,7 +112,7 @@ public class shooterCommandDefault  extends Command{
                 }
 
 
-                shooterPos = handler.setRegression(0.58, -0.015, 0.003, xPos, yPos) + 0.0008;
+                shooterPos = handler.setRegression(0.58, -0.015, 0.003, xPos, yPos) + 0.0008 - 0.05;
                 // System.out.print(setShoot);
                 // System.out.println(state);
                 setShoot = true;
